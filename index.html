@@ -1,12 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta name="description" content="Проект 3 Яндекс.Практикум">
+  <meta name="keywords" content="Адаптивная верстка">
+  <meta name="author" content="Игорь Петров">
+  <title>Место</title>
+  <link rel="stylesheet" href="./pages/index.css">
+  <link rel="shortcut icon" href="./images/favicon/logo-48.png">
+  <base target="_blank">
 </head>
 <body>
-  
+  <div class="page">
+    <header class="header">
+      <img class="header__logo" src="./images/Mesto_logo.svg" alt="Логотип проекта Место">
+      <div class="header__line"></div>
+    </header>
+    <main class="content">
+      <div class="profile">
+        <div class="profile__info">
+          <img class="profile__avatar" src="./images/Avatar.jpg" alt="Аватар профиля">
+          <p class="profile__name">Жак-Ив Кусто</p>
+          <p class="profile__signature">Исследователь океана</p>
+          <button class="profile__edit-button">
+            <img class="profile__icon-edit" src="./images/icon-pen.svg" alt="Иконка редактирования">
+          </button>
+        </div>
+        <button class="profile__add-button">
+          <img class="profile__icon-add" src="./images/icon-plus.svg" alt="Иконка добавления">
+        </button>
+      </div>
+    </main>
+    <footer class="footer">
+      <p class="footer__copy">&copy; Игорь Петров</p>
+    </footer>
+  </div>
 </body>
 </html>

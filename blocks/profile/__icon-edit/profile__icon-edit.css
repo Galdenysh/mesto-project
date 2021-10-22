@@ -1,0 +1,5 @@
+.profile__icon-edit {
+  max-width: 10px;
+  max-height: 10px;
+  object-fit: cover;
+}

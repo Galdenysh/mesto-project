@@ -1,0 +1,8 @@
+.profile__signature {
+  margin: 0 0 auto 0;
+  grid-area: signature;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 1.22;
+}
