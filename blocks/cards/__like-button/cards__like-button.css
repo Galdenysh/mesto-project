@@ -1,0 +1,8 @@
+.cards__like-button {
+  grid-area: like-button;
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  max-width: 22px;
+  max-height: 19px;
+}

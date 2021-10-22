@@ -1,0 +1,5 @@
+.cards__place {
+  grid-area: place;
+  max-width: 282px;
+  max-height: 282px;
+}

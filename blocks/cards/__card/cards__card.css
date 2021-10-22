@@ -1,0 +1,15 @@
+.cards__card {
+  display: grid;
+  max-width: 282px;
+  min-height: 361px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  align-items: baseline;
+  grid-template-columns: 215px auto;
+  grid-template-rows: 282px auto;
+  gap: 25px;
+  grid-template-areas: 
+    "place place"
+    "title like-button";
+}
