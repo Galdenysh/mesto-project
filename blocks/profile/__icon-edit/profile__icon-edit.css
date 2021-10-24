@@ -3,3 +3,10 @@
   max-height: 10px;
   object-fit: cover;
 }
+
+@media screen and (max-width: 619px) {
+  .profile__icon-edit {
+    max-width: 8px;
+    max-height: 8px;
+  }
+}

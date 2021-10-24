@@ -1,11 +1,28 @@
 .profile__info {
-  margin: auto 0;
   display: grid;
   grid-template-columns: repeat(3, auto);
-  grid-template-rows: repeat(2, auto);
   gap: 16px 18px;
   align-items: end;
   grid-template-areas: 
     "avatar name icon"
     "avatar signature .";
+}
+
+@media screen and (max-width: 918px) {
+  .profile__info {
+    margin: auto;
+  }
+} 
+
+@media screen and (max-width: 619px) {
+  .profile__info {
+    padding-left: 28px;
+    justify-items: center;
+    grid-template-columns: repeat(2, auto);
+    gap: 14px 10px;
+    grid-template-areas: 
+      "avatar ."
+      "name icon"
+      "signature ."
+  }
 }

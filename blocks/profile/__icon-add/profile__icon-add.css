@@ -3,3 +3,10 @@
   max-height: 22px;
   object-fit: cover;
 }
+
+@media screen and (max-width: 619px) {
+  .profile__icon-add {
+    max-width: 16px;
+    max-height: 16px;
+  }
+}

@@ -14,16 +14,16 @@
 </head>
 <body>
   <div class="page">
-    <header class="header">
+    <header class="header page__header">
       <img class="header__logo" src="./images/mesto_logo.svg" alt="Логотип проекта Место">
       <div class="header__line"></div>
     </header>
-    <main class="content">
-      <div class="profile">
+    <main class="content page__content">
+      <section class="profile">
         <div class="profile__info">
           <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар профиля">
-          <p class="profile__name">Жак-Ив Кусто</p>
-          <p class="profile__signature">Исследователь океана</p>
+          <p class="profile__name text">Жак-Ив Кусто</p>
+          <p class="profile__signature text">Исследователь океана</p>
           <button class="profile__edit-button">
             <img class="profile__icon-edit" src="./images/icon-pen.svg" alt="Иконка редактирования">
           </button>
@@ -31,54 +31,47 @@
         <button class="profile__add-button">
           <img class="profile__icon-add" src="./images/icon-plus.svg" alt="Иконка добавления">
         </button>
-      </div>
-      <div class="cards">
+      </section>
+      <section class="cards">
         <article class="cards__card">
           <img class="cards__place" src="./images/img-1.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title">Карачаевск</h2>
-          <button class="cards__like-button">
-            <img class="cards__icon-like" src="./images/icon-like.svg" alt="Иконка нравится">
-          </button>
+          <h2 class="cards__title text">Карачаевск</h2>
+          <button class="cards__like-button cards__like-button_active"></button>
         </article>
         <article class="cards__card">
           <img class="cards__place" src="./images/img-2.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title">Гора Эльбрус</h2>
+          <h2 class="cards__title text">Гора Эльбрус</h2>
           <button class="cards__like-button">
-            <img class="cards__icon-like" src="./images/icon-like.svg" alt="Иконка нравится">
           </button>
         </article>
         <article class="cards__card">
           <img class="cards__place" src="./images/img-3.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title">Домбай</h2>
+          <h2 class="cards__title text">Домбай</h2>
           <button class="cards__like-button">
-            <img class="cards__icon-like" src="./images/icon-like.svg" alt="Иконка нравится">
           </button>
         </article>
         <article class="cards__card">
           <img class="cards__place" src="./images/img-4.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title">Гора Эльбрус</h2>
+          <h2 class="cards__title text">Гора Эльбрус</h2>
           <button class="cards__like-button">
-            <img class="cards__icon-like" src="./images/icon-like.svg" alt="Иконка нравится">
           </button>
         </article>
         <article class="cards__card">
           <img class="cards__place" src="./images/img-5.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title">Домбай</h2>
+          <h2 class="cards__title text">Домбай</h2>
           <button class="cards__like-button">
-            <img class="cards__icon-like" src="./images/icon-like.svg" alt="Иконка нравится">
           </button>
         </article>
         <article class="cards__card">
           <img class="cards__place" src="./images/img-6.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title">Карачаево-Ч...</h2>
+          <h2 class="cards__title text">Карачаево-Черкессия</h2>
           <button class="cards__like-button">
-            <img class="cards__icon-like" src="./images/icon-like.svg" alt="Иконка нравится">
           </button>
         </article>
-      </div>
+      </section>
     </main>
-    <footer class="footer">
-      <p class="footer__copy">&copy; Игорь Петров</p>
+    <footer class="footer page__footer">
+      <p class="footer__copy text">&copy; Игорь Петров</p>
     </footer>
   </div>
 </body>

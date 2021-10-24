@@ -7,4 +7,21 @@
   background-color: inherit;
   border: 2px solid white;
   box-sizing: border-box;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.profile__add-button:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 918px) {
+  .profile__add-button {
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 619px) {
+  .profile__add-button {
+    margin-top: 36px;
+  }
 }

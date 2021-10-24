@@ -1,10 +1,12 @@
 .cards {
   padding-top: 50px;
-  font-family: 'Inter', Arial, sans-serif;
-  color: black;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 282px);
+  grid-template-columns: repeat(auto-fit, minmax(auto, 282px));
   gap: 20px 17px;
+}
+
+@media screen and (max-width: 619px) {
+  .cards {
+    padding-top: 36px;
+  }
 }

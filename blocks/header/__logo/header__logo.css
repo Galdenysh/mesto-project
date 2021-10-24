@@ -2,5 +2,17 @@
   max-width: 142px;
   max-height: 33px;
   object-fit: cover;
+}
 
+@media screen and (max-width: 918px) {
+  .header__logo {
+    margin-left: 27px;
+  }
+}
+
+@media screen and (max-width: 619px) {
+  .header__logo {
+    max-width: 104px;
+    max-height: 24px;
+  }
 }
