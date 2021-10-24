@@ -22,15 +22,26 @@
       <section class="profile">
         <div class="profile__info">
           <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар профиля">
-          <p class="profile__name text">Жак-Ив Кусто</p>
+          <h1 class="profile__name text">Жак-Ив Кусто</h1>
           <p class="profile__signature text">Исследователь океана</p>
-          <button class="profile__edit-button">
-            <img class="profile__icon-edit" src="./images/icon-pen.svg" alt="Иконка редактирования">
-          </button>
+          <button class="profile__edit-button"></button>
         </div>
-        <button class="profile__add-button">
-          <img class="profile__icon-add" src="./images/icon-plus.svg" alt="Иконка добавления">
-        </button>
+        <button class="profile__add-button"></button>
+      </section>
+      <section class="popup popup_opened">
+        <button class="popup__close-button"></button>
+        <div class="popup__conteiner">
+          <h2 class="popup__title text">Редактировать профиль</h2>
+          <form class="popup__form">
+            <fieldset class="popup__user-info">
+              <input class="popup__form-item text" type="text" name="firstname" placeholder="Имя">
+              <div class="popup__line"></div>
+              <input class="popup__form-item text" type="text" name="signature" placeholder="Подпись">
+              <div class="popup__line"></div>
+              <input class="popup__save-button text" type="submit" value="Сохранить">
+            </fieldset>
+          </form>
+        </div>
       </section>
       <section class="cards">
         <article class="cards__card">
@@ -41,32 +52,27 @@
         <article class="cards__card">
           <img class="cards__place" src="./images/img-2.jpg" alt="Фотография Карачаевск">
           <h2 class="cards__title text">Гора Эльбрус</h2>
-          <button class="cards__like-button">
-          </button>
+          <button class="cards__like-button"></button>
         </article>
         <article class="cards__card">
           <img class="cards__place" src="./images/img-3.jpg" alt="Фотография Карачаевск">
           <h2 class="cards__title text">Домбай</h2>
-          <button class="cards__like-button">
-          </button>
+          <button class="cards__like-button"></button>
         </article>
         <article class="cards__card">
           <img class="cards__place" src="./images/img-4.jpg" alt="Фотография Карачаевск">
           <h2 class="cards__title text">Гора Эльбрус</h2>
-          <button class="cards__like-button">
-          </button>
+          <button class="cards__like-button"></button>
         </article>
         <article class="cards__card">
           <img class="cards__place" src="./images/img-5.jpg" alt="Фотография Карачаевск">
           <h2 class="cards__title text">Домбай</h2>
-          <button class="cards__like-button">
-          </button>
+          <button class="cards__like-button"></button>
         </article>
         <article class="cards__card">
           <img class="cards__place" src="./images/img-6.jpg" alt="Фотография Карачаевск">
           <h2 class="cards__title text">Карачаево-Черкессия</h2>
-          <button class="cards__like-button">
-          </button>
+          <button class="cards__like-button"></button>
         </article>
       </section>
     </main>

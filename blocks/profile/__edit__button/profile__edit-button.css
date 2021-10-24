@@ -1,10 +1,10 @@
 .profile__edit-button {
   grid-area: icon;
   padding: 0;
+  background: no-repeat center url(../../../images/icon-pen.svg);
   width: 24px;
   height: 24px;
-  object-fit: none;
-  background-color: inherit;
+  background-color: transparent;
   border: 1px solid white;
   box-sizing: border-box;
   transition: opacity 0.2s ease-in-out;
@@ -12,11 +12,13 @@
 
 .profile__edit-button:hover {
   opacity: 0.6;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 619px) {
   .profile__edit-button {
     width: 18px;
     height: 18px;
+    background-size: 8px 8px;
   }
 }

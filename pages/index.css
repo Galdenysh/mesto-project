@@ -20,9 +20,18 @@
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__signature/profile__signature.css);
 @import url(../blocks/profile/__edit__button/profile__edit-button.css);
-@import url(../blocks/profile/__icon-edit/profile__icon-edit.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
-@import url(../blocks/profile/__icon-add/profile__icon-add.css);
+
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/__conteiner/popup__conteiner.css);
+@import url(../blocks/popup/__close-button/popup__close-button.css);
+@import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__save-button/popup__save-button.css);
+@import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__user-info/popup__user-info.css);
+@import url(../blocks/popup/__form-item/popup__form-item.css);
+@import url(../blocks/popup/__line/popup__line.css);
 
 @import url(../blocks/cards/cards.css);
 @import url(../blocks/cards/__card/cards__card.css);
