@@ -1,9 +1,10 @@
 .profile__edit-button {
-  grid-area: icon;
+  margin-bottom: 9px;
   padding: 0;
+  grid-area: icon;
   background: no-repeat center url(../../../images/icon-pen.svg);
-  width: 24px;
-  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
   background-color: transparent;
   border: 1px solid white;
   box-sizing: border-box;
@@ -17,8 +18,9 @@
 
 @media screen and (max-width: 619px) {
   .profile__edit-button {
-    width: 18px;
-    height: 18px;
+    margin-bottom: 5px;
+    min-width: 18px;
+    min-height: 18px;
     background-size: 8px 8px;
   }
 }

@@ -16,68 +16,65 @@
   <div class="page">
     <header class="header page__header">
       <img class="header__logo" src="./images/mesto_logo.svg" alt="Логотип проекта Место">
-      <div class="header__line"></div>
     </header>
     <main class="content page__content">
       <section class="profile">
         <div class="profile__info">
           <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар профиля">
-          <h1 class="profile__name text">Жак-Ив Кусто</h1>
-          <p class="profile__signature text">Исследователь океана</p>
-          <button class="profile__edit-button"></button>
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <p class="profile__signature">Исследователь океана</p>
+          <button class="profile__edit-button" type="button"></button>
         </div>
-        <button class="profile__add-button"></button>
+        <button class="profile__add-button" type="button"></button>
+      </section>
+      <section class="cards">
+        <article class="cards__card">
+          <img class="cards__place" src="./images/img-1.jpg" alt="Фотография Карачаевска. Вид на церковь">
+          <h2 class="cards__title">Карачаевск</h2>
+          <button class="cards__like-button cards__like-button_active" type="button"></button>
+        </article>
+        <article class="cards__card">
+          <img class="cards__place" src="./images/img-2.jpg" alt="Фотография горы Эльбрус. Вид на горы">
+          <h2 class="cards__title">Гора Эльбрус</h2>
+          <button class="cards__like-button" type="button"></button>
+        </article>
+        <article class="cards__card">
+          <img class="cards__place" src="./images/img-3.jpg" alt="Фотография Домбая. Вид на горы">
+          <h2 class="cards__title">Домбай</h2>
+          <button class="cards__like-button" type="button"></button>
+        </article>
+        <article class="cards__card">
+          <img class="cards__place" src="./images/img-4.jpg" alt="Фотография горы Эльбрус. Вид на горы">
+          <h2 class="cards__title">Гора Эльбрус</h2>
+          <button class="cards__like-button" type="button"></button>
+        </article>
+        <article class="cards__card">
+          <img class="cards__place" src="./images/img-5.jpg" alt="Фотография Домбая. Вид на горы">
+          <h2 class="cards__title">Домбай</h2>
+          <button class="cards__like-button" type="button"></button>
+        </article>
+        <article class="cards__card">
+          <img class="cards__place" src="./images/img-6.jpg" alt="Фотография Карачаевска. Вид на церковь">
+          <h2 class="cards__title">Карачаево-Черкессия</h2>
+          <button class="cards__like-button" type="button"></button>
+        </article>
       </section>
       <section class="popup popup_opened">
-        <button class="popup__close-button"></button>
         <div class="popup__conteiner">
-          <h2 class="popup__title text">Редактировать профиль</h2>
-          <form class="popup__form">
+          <button class="popup__close-button"></button>
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <form class="popup__form" name="user-info">
             <fieldset class="popup__user-info">
-              <input class="popup__form-item text" type="text" name="firstname" placeholder="Имя">
-              <div class="popup__line"></div>
-              <input class="popup__form-item text" type="text" name="signature" placeholder="Подпись">
-              <div class="popup__line"></div>
-              <input class="popup__save-button text" type="submit" value="Сохранить">
+              <input class="popup__form-item" type="text" name="firstname" placeholder="Имя">
+              <input class="popup__form-item" type="text" name="signature" placeholder="Подпись">
+              <button class="popup__save-button" type="submit">Сохранить</button>
             </fieldset>
           </form>
         </div>
       </section>
-      <section class="cards">
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-1.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title text">Карачаевск</h2>
-          <button class="cards__like-button cards__like-button_active"></button>
-        </article>
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-2.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title text">Гора Эльбрус</h2>
-          <button class="cards__like-button"></button>
-        </article>
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-3.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title text">Домбай</h2>
-          <button class="cards__like-button"></button>
-        </article>
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-4.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title text">Гора Эльбрус</h2>
-          <button class="cards__like-button"></button>
-        </article>
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-5.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title text">Домбай</h2>
-          <button class="cards__like-button"></button>
-        </article>
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-6.jpg" alt="Фотография Карачаевск">
-          <h2 class="cards__title text">Карачаево-Черкессия</h2>
-          <button class="cards__like-button"></button>
-        </article>
-      </section>
     </main>
     <footer class="footer page__footer">
-      <p class="footer__copy text">&copy; Игорь Петров</p>
+      <p class="footer__copy">&copy; Игорь Петров</p>
     </footer>
   </div>
 </body>

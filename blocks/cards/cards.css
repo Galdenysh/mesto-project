@@ -1,5 +1,6 @@
 .cards {
   padding-top: 50px;
+  min-height: calc(100vh - 481px);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(auto, 282px));
   gap: 20px 17px;
@@ -8,5 +9,6 @@
 @media screen and (max-width: 619px) {
   .cards {
     padding-top: 36px;
+    min-height: calc(100vh - 552px);
   }
 }

@@ -1,7 +1,7 @@
 .profile__info {
   display: grid;
   grid-template-columns: repeat(3, auto);
-  gap: 16px 18px;
+  gap: 9px 18px;
   align-items: end;
   grid-template-areas: 
     "avatar name icon"
@@ -19,7 +19,7 @@
     padding-left: 28px;
     justify-items: center;
     grid-template-columns: repeat(2, auto);
-    gap: 14px 10px;
+    gap: 9px 10px;
     grid-template-areas: 
       "avatar ."
       "name icon"
