@@ -18,6 +18,7 @@
 .popup__form-item:focus {
   outline: none;
   border: 1px solid rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 619px) {
