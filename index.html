@@ -59,14 +59,14 @@
           <button class="cards__like-button" type="button"></button>
         </article>
       </section>
-      <section class="popup popup_opened">
+      <section class="popup">
         <div class="popup__conteiner">
           <button class="popup__close-button" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
           <form class="popup__form" name="user-info">
             <fieldset class="popup__user-info">
-              <input class="popup__form-item" type="text" name="firstname" placeholder="Имя">
-              <input class="popup__form-item" type="text" name="signature" placeholder="Подпись">
+              <input class="popup__form-item" type="text" name="firstname" placeholder="Имя" value="">
+              <input class="popup__form-item" type="text" name="signature" placeholder="Подпись" value="">
               <button class="popup__save-button" type="submit">Сохранить</button>
             </fieldset>
           </form>
@@ -77,5 +77,6 @@
       <p class="footer__copy">&copy; Игорь Петров</p>
     </footer>
   </div>
+  <script src="./index.js"></script>
 </body>
 </html>
