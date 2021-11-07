@@ -31,6 +31,8 @@ function formSubmitHandler (evt) {
     // Записываем в профиль значение из полей форм
     userName.textContent = nameInput.value;
     userSignature.textContent = signatureInput.value;
+
+    closePopup();
 }
 
 const cardsBlock = document.querySelector(".cards");
