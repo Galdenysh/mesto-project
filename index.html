@@ -59,8 +59,8 @@
           <button class="cards__like-button" type="button"></button>
         </article>
       </section>
-      <section class="popup">
-        <div class="popup__conteiner">
+      <section class="popup" id="js-popup-edit">
+        <div class="popup__container">
           <button class="popup__close-button" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
           <form class="popup__form" name="user-info">
@@ -68,6 +68,19 @@
               <input class="popup__form-item popup__form-item_select_name" type="text" name="name" placeholder="Имя" value="">
               <input class="popup__form-item popup__form-item_select_signature" type="text" name="signature" placeholder="Подпись" value="">
               <button class="popup__save-button" type="submit">Сохранить</button>
+            </fieldset>
+          </form>
+        </div>
+      </section>
+      <section class="popup" id="js-popup-add">
+        <div class="popup__container">
+          <button class="popup__close-button" type="button"></button>
+          <h2 class="popup__title">Новое место</h2>
+          <form class="popup__form" name="place">
+            <fieldset class="popup__place">
+              <input class="popup__form-item popup__form-item_select_place-name" type="text" name="place-name" placeholder="Название" value="">
+              <input class="popup__form-item popup__form-item_select_picture-url" type="text" name="picture-url" placeholder="Ссылка на картинку" value="">
+              <button class="popup__save-button" type="submit">Создать</button>
             </fieldset>
           </form>
         </div>

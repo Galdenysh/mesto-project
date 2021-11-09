@@ -1,0 +1,12 @@
+.popup__place {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 358px;
+  border-style: none;
+}
+
+@media screen and (max-width: 619px) {
+  .popup__place {
+    max-width: 238px;
+  }
+}
