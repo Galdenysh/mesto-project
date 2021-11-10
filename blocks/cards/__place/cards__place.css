@@ -1,7 +1,14 @@
 .cards__place {
   grid-area: place;
-  max-width: 282px;
-  min-height: 282px;
+  min-width: 282px;
+  max-height: 282px;
   object-fit: cover;
   color: black;
+  will-change: transform;
+  transition: all 0.3s ease-in-out;
+}
+
+.cards__card:hover .cards__place {
+  transform: scale(1.01) translateY(-1.5px);
+  opacity: 0.95;
 }
