@@ -99,26 +99,44 @@ function formAddSubmitHandler(evt) {
   addCard(placeName, pictureUrl); // вызываем функцию добавления карточки и посылаем значения форм
 }
 
+const popupImageBlock = document.querySelector("#js-popup-image"); // Находим попап с просмотром фотографии
+
+// Функция открытия попапа с просмотром фотографии
+function openPopupImage(placeName, pictureUrl) {
+  popupImageBlock.classList.add("popup_opened");
+
+  popupImageBlock.querySelector(".popup__big-image").src = pictureUrl;
+  popupImageBlock.querySelector(".popup__image-caption").textContent = placeName;
+}
+
+// Функция закрытия попапа с просмотром фотографии
+function closePopupImage() {
+  popupImageBlock.classList.remove("popup_opened");
+}
+
 // Функция добавления карточки
 function addCard(placeName, pictureUrl) {
   const cardTemplate = document.querySelector("#js-cards").content;
-  const cardElement = cardTemplate.querySelector(".cards__card").cloneNode(true);
+  let cardElement = cardTemplate.querySelector(".cards__card").cloneNode(true);
 
   // Заполняем карточку
   cardElement.querySelector(".cards__title").textContent = placeName;
   cardElement.querySelector(".cards__place").src = pictureUrl;
   cardElement.querySelector(".cards__place").alt = placeName;
 
+  document.querySelector(".cards").prepend(cardElement); // Пушим карточку
+
   // Реализация лайка
   cardElement.querySelector(".cards__like-button").addEventListener("click", function(evt) {
     evt.target.classList.toggle("cards__like-button_active");
   });
 
-  document.querySelector(".cards").prepend(cardElement); // Пушим карточку
+  cardElement.querySelector(".cards__place").addEventListener("click", () => openPopupImage(placeName, pictureUrl)); // Слушаем клик по картинке и открываем попап
 
   // Удаляем карточку
   cardElement.querySelector(".cards__remove-button").addEventListener("click", function() {
     cardElement.remove();
+    cardElement = null;
   });
 }
 
@@ -126,14 +144,15 @@ function addCard(placeName, pictureUrl) {
 const openPopupEditBtn = profileBlock.querySelector(".profile__edit-button");
 const openPopupAddBtn = profileBlock.querySelector(".profile__add-button");
 const closePopupEditBtn = popupEditBlock.querySelector(".popup__close-button");
-const closePopupAddBtn = popupAddBlock.querySelector(".popup__close-button")
+const closePopupAddBtn = popupAddBlock.querySelector(".popup__close-button");
+const closePopupImageBtn = popupImageBlock.querySelector(".popup__close-button");
 
 // Слушаем кнопки
 openPopupEditBtn.addEventListener("click", openPopupEdit);
 openPopupAddBtn.addEventListener("click", openPopupAdd);
 closePopupEditBtn.addEventListener("click", closePopupEdit);
 closePopupAddBtn.addEventListener("click", closePopupAdd);
-
+closePopupImageBtn.addEventListener("click", closePopupImage);
 
 // Слушаем отправку формы
 formEditElement.addEventListener("submit", formEditSubmitHandler);
