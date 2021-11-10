@@ -24,7 +24,7 @@ function closePopupEdit() {
 }
 
 // Обработчик «отправки» формы данных пользователя
-function formEditSubmitHandler (evt) {
+function formEditSubmitHandler(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы
 
     // Записываем в профиль значение из полей форм
@@ -55,7 +55,7 @@ function closePopupAdd() {
 }
 
 // Обработчик «отправки» формы добавления места
-function formAddSubmitHandler (evt) {
+function formAddSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы
 
   // Записываем в переменные значение из полей форм
@@ -77,11 +77,16 @@ function addCard(placeName, pictureUrl) {
   cardElement.querySelector(".cards__place").alt = placeName;
 
   // Реализация лайка
-  cardElement.querySelector('.cards__like-button').addEventListener('click', function(evt) {
+  cardElement.querySelector(".cards__like-button").addEventListener("click", function(evt) {
     evt.target.classList.toggle("cards__like-button_active");
   });
 
   document.querySelector(".cards").append(cardElement); // Пушим карточку
+
+  // Удаляем карточку
+  cardElement.querySelector(".cards__remove-button").addEventListener("click", function() {
+    cardElement.remove();
+  });
 }
 
 // Находим кнопки
@@ -95,6 +100,7 @@ openPopupEditBtn.addEventListener("click", openPopupEdit);
 openPopupAddBtn.addEventListener("click", openPopupAdd);
 closePopupEditBtn.addEventListener("click", closePopupEdit);
 closePopupAddBtn.addEventListener("click", closePopupAdd);
+
 
 // Слушаем отправку формы
 formEditElement.addEventListener("submit", formEditSubmitHandler);
