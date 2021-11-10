@@ -28,36 +28,7 @@
         <button class="profile__add-button" type="button"></button>
       </section>
       <section class="cards">
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-1.jpg" alt="Фотография Карачаевска. Вид на церковь">
-          <h2 class="cards__title">Карачаевск</h2>
-          <button class="cards__like-button" type="button"></button>
-        </article>
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-2.jpg" alt="Фотография горы Эльбрус. Вид на горы">
-          <h2 class="cards__title">Гора Эльбрус</h2>
-          <button class="cards__like-button" type="button"></button>
-        </article>
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-3.jpg" alt="Фотография Домбая. Вид на горы">
-          <h2 class="cards__title">Домбай</h2>
-          <button class="cards__like-button" type="button"></button>
-        </article>
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-4.jpg" alt="Фотография горы Эльбрус. Вид на горы">
-          <h2 class="cards__title">Гора Эльбрус</h2>
-          <button class="cards__like-button" type="button"></button>
-        </article>
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-5.jpg" alt="Фотография Домбая. Вид на горы">
-          <h2 class="cards__title">Домбай</h2>
-          <button class="cards__like-button" type="button"></button>
-        </article>
-        <article class="cards__card">
-          <img class="cards__place" src="./images/img-6.jpg" alt="Фотография Карачаевска. Вид на церковь">
-          <h2 class="cards__title">Карачаево-Черкессия</h2>
-          <button class="cards__like-button" type="button"></button>
-        </article>
+        <!-- Секция для вставки карточек -->
       </section>
       <section class="popup" id="js-popup-edit">
         <div class="popup__container">
@@ -90,6 +61,15 @@
       <p class="footer__copy">&copy; Игорь Петров</p>
     </footer>
   </div>
+
+  <template id="js-cards">
+    <article class="cards__card">
+      <img class="cards__place" src="./images/img-1.jpg" alt="Карачаевск">
+      <h2 class="cards__title">Карачаевск</h2>
+      <button class="cards__like-button" type="button"></button>
+    </article>
+  </template>
+
   <script src="./index.js"></script>
 </body>
 </html>
