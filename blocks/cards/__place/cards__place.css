@@ -11,4 +11,5 @@
 .cards__place:hover {
   transform: scale(1.01) translateY(-1.5px);
   opacity: 0.95;
+  cursor: pointer;
 }

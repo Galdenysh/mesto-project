@@ -8,6 +8,10 @@
   position: fixed;
   top: 0;
   left: 0;
+  font-family: "Inter", Arial, sans-serif;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s 0.3s, opacity 0.3s ease-in-out;

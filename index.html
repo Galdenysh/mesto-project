@@ -1,83 +1,108 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Проект 3 Яндекс.Практикум">
-  <meta name="keywords" content="Адаптивная верстка">
-  <meta name="author" content="Игорь Петров">
-  <title>Место</title>
-  <link rel="stylesheet" href="./pages/index.css">
-  <link rel="shortcut icon" href="./images/favicon/logo-48.png">
-  <base target="_blank">
-</head>
-<body>
-  <div class="page">
-    <header class="header page__header">
-      <img class="header__logo" src="./images/mesto_logo.svg" alt="Логотип проекта Место">
-    </header>
-    <main class="content page__content">
-      <section class="profile">
-        <div class="profile__info">
-          <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар профиля">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <p class="profile__signature">Исследователь океана</p>
-          <button class="profile__edit-button" type="button"></button>
-        </div>
-        <button class="profile__add-button" type="button"></button>
-      </section>
-      <section class="cards">
-        <!-- Секция для вставки карточек -->
-      </section>
-      <section class="popup" id="js-popup-edit">
-        <div class="popup__container">
-          <button class="popup__close-button" type="button"></button>
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form" name="user-info">
-            <fieldset class="popup__user-info">
-              <input class="popup__form-item popup__form-item_select_name" type="text" name="name" placeholder="Имя" value="">
-              <input class="popup__form-item popup__form-item_select_signature" type="text" name="signature" placeholder="Подпись" value="">
-              <button class="popup__save-button" type="submit">Сохранить</button>
-            </fieldset>
-          </form>
-        </div>
-      </section>
-      <section class="popup" id="js-popup-add">
-        <div class="popup__container">
-          <button class="popup__close-button" type="button"></button>
-          <h2 class="popup__title">Новое место</h2>
-          <form class="popup__form" name="place">
-            <fieldset class="popup__place">
-              <input class="popup__form-item popup__form-item_select_place-name" type="text" name="place-name" placeholder="Название" value="">
-              <input class="popup__form-item popup__form-item_select_picture-url" type="text" name="picture-url" placeholder="Ссылка на картинку" value="">
-              <button class="popup__save-button" type="submit">Создать</button>
-            </fieldset>
-          </form>
-        </div>
-      </section>
-      <section class="popup popup_overlay-opacity_deep" id="js-popup-image">
-        <div class="popup__picture">
-          <img class="popup__big-image" src="./images/img-1.jpg" alt="Карачаевск">
-          <p class="popup__image-caption">Карачаевск</p>
-          <button class="popup__close-button" type="button"></button>
-        </div>
-      </section>
-    </main>
-    <footer class="footer page__footer">
-      <p class="footer__copy">&copy; Игорь Петров</p>
-    </footer>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Проект 3 Яндекс.Практикум" />
+    <meta name="keywords" content="Адаптивная верстка" />
+    <meta name="author" content="Игорь Петров" />
+    <title>Место</title>
+    <link rel="stylesheet" href="./pages/index.css" />
+    <link rel="shortcut icon" href="./images/favicon/logo-48.png" />
+    <base target="_blank" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header page__header">
+        <img class="header__logo" src="./images/mesto_logo.svg" alt="Логотип проекта Место" />
+      </header>
+      <main class="content page__content">
+        <section class="profile">
+          <div class="profile__info">
+            <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар профиля" />
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <p class="profile__signature">Исследователь океана</p>
+            <button class="profile__edit-button" type="button"></button>
+          </div>
+          <button class="profile__add-button" type="button"></button>
+        </section>
+        <section class="cards">
+          <!-- Секция для вставки карточек -->
+        </section>
+      </main>
+      <footer class="footer page__footer">
+        <p class="footer__copy">&copy; Игорь Петров</p>
+      </footer>
+    </div>
 
-  <template id="js-cards">
-    <article class="cards__card">
-      <img class="cards__place" src="./images/img-1.jpg" alt="Карачаевск">
-      <h2 class="cards__title">Карачаевск</h2>
-      <button class="cards__like-button" type="button"></button>
-      <button class="cards__remove-button" type="button"></button>
-    </article>
-  </template>
+    <section class="popup popup_type_edit">
+      <div class="popup__container">
+        <button class="popup__close-button" type="button"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__form" name="user-info">
+          <fieldset class="popup__user-info">
+            <input
+              class="popup__form-item popup__form-item_select_name"
+              type="text"
+              name="name"
+              placeholder="Имя"
+              required
+            />
+            <input
+              class="popup__form-item popup__form-item_select_signature"
+              type="text"
+              name="signature"
+              placeholder="Подпись"
+              required
+            />
+            <button class="popup__save-button" type="submit">Сохранить</button>
+          </fieldset>
+        </form>
+      </div>
+    </section>
+    <section class="popup popup_type_add">
+      <div class="popup__container">
+        <button class="popup__close-button" type="button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form" name="place">
+          <fieldset class="popup__place">
+            <input
+              class="popup__form-item popup__form-item_select_place-name"
+              type="text"
+              name="place-name"
+              placeholder="Название"
+              required
+            />
+            <input
+              class="popup__form-item popup__form-item_select_picture-url"
+              type="url"
+              name="picture-url"
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <button class="popup__save-button" type="submit">Создать</button>
+          </fieldset>
+        </form>
+      </div>
+    </section>
+    <section class="popup popup_type_image">
+      <div class="popup__picture">
+        <img class="popup__big-image" src="./images/img-1.jpg" alt="Карачаевск" />
+        <p class="popup__image-caption">Карачаевск</p>
+        <button class="popup__close-button" type="button"></button>
+      </div>
+    </section>
+    <template id="js-cards">
+      <article class="cards__card">
+        <img class="cards__place" src="./images/img-1.jpg" alt="Карачаевск" />
+        <h2 class="cards__title">Карачаевск</h2>
+        <button class="cards__like-button" type="button"></button>
+        <button class="cards__remove-button" type="button"></button>
+      </article>
+    </template>
 
-  <script src="./index.js"></script>
-</body>
+    <script src="./scripts/initial-card.js"></script>
+    <script src="./scripts/index.js"></script>
+  </body>
 </html>
