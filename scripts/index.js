@@ -15,14 +15,17 @@ const formAddElement = popupAddNewCard.querySelector(".popup__form");
 const placeNameInput = formAddElement.querySelector(".popup__form-item_select_place-name");
 const pictureUrlInput = formAddElement.querySelector(".popup__form-item_select_picture-url");
 
-const popupImageBlock = document.querySelector(".popup_type_image"); // Находим попап с просмотром фотографии
+// Находим попап с просмотром фотографии и его элементы
+const popupImageFullscreen = document.querySelector(".popup_type_image");
+const pictureLink = popupImageFullscreen.querySelector(".popup__big-image");
+const pictureName = popupImageFullscreen.querySelector(".popup__image-caption");
 
 // Находим кнопки
 const openPopupEditBtn = profileBlock.querySelector(".profile__edit-button");
 const openPopupAddBtn = profileBlock.querySelector(".profile__add-button");
 const closePopupEditBtn = popupEditProfile.querySelector(".popup__close-button");
 const closePopupAddBtn = popupAddNewCard.querySelector(".popup__close-button");
-const closePopupImageBtn = popupImageBlock.querySelector(".popup__close-button");
+const closePopupImageBtn = popupImageFullscreen.querySelector(".popup__close-button");
 
 // Добавление начальных карточек
 initialCards.forEach(function (cardData) {
@@ -49,11 +52,11 @@ function openPopupEdit() {
 
 // Функция открытия попапа с просмотром фотографии
 function openPopupImage(cardData) {
-  popupImageBlock.querySelector(".popup__big-image").src = cardData.link;
-  popupImageBlock.querySelector(".popup__big-image").alt = cardData.name;
-  popupImageBlock.querySelector(".popup__image-caption").textContent = cardData.name;
+  pictureLink.src = cardData.link;
+  pictureLink.alt = cardData.name;
+  pictureName.textContent = cardData.name;
 
-  openPopup(popupImageBlock);
+  openPopup(popupImageFullscreen);
 }
 
 // Обработчик «отправки» формы данных пользователя
@@ -74,9 +77,10 @@ function formAddSubmitHandler(evt) {
   // Записываем в целевой объект значение из полей форм
   const cardData = { name: placeNameInput.value, link: pictureUrlInput.value };
 
-  closePopup(popupAddNewCard);
   addCard(cardData); // вызываем функцию добавления карточки и посылаем значения форм
   formAddElement.reset(); // Опусташаем поля формы
+
+  closePopup(popupAddNewCard);
 }
 
 // Функция создания карточки
@@ -91,6 +95,8 @@ function createCard(cardData) {
   cardPlace.src = cardData.link;
   cardPlace.alt = cardData.name;
 
+  setEventListener(cardElement, cardData); // Вызываем функцию для прослушивания событий
+
   return cardElement;
 }
 
@@ -99,15 +105,10 @@ function addCard(cardData) {
   const cardElement = createCard(cardData);
 
   document.querySelector(".cards").prepend(cardElement); // Пушим карточку
-
-  // Слушаем взаимодействия с карточками
-  cardElement.querySelector(".cards__like-button").addEventListener("click", likeCard);
-  cardElement.querySelector(".cards__place").addEventListener("click", () => openPopupImage(cardData));
-  cardElement.querySelector(".cards__remove-button").addEventListener("click", () => removeCard(cardElement));
 }
 
 // Функция переключения лайка
-function likeCard(evt) {
+function toggleLike(evt) {
   evt.target.classList.toggle("cards__like-button_active");
 }
 
@@ -116,12 +117,19 @@ function removeCard(cardElement) {
   cardElement.remove();
 }
 
+// Функция прослушивания взаимодействия с карточками
+function setEventListener(cardElement, cardData) {
+  cardElement.querySelector(".cards__like-button").addEventListener("click", toggleLike);
+  cardElement.querySelector(".cards__place").addEventListener("click", () => openPopupImage(cardData));
+  cardElement.querySelector(".cards__remove-button").addEventListener("click", () => removeCard(cardElement));
+}
+
 // Слушаем кнопки
 openPopupEditBtn.addEventListener("click", openPopupEdit);
 openPopupAddBtn.addEventListener("click", () => openPopup(popupAddNewCard));
 closePopupEditBtn.addEventListener("click", () => closePopup(popupEditProfile));
 closePopupAddBtn.addEventListener("click", () => closePopup(popupAddNewCard));
-closePopupImageBtn.addEventListener("click", () => closePopup(popupImageBlock));
+closePopupImageBtn.addEventListener("click", () => closePopup(popupImageFullscreen));
 
 // Слушаем отправку формы
 formEditElement.addEventListener("submit", formEditSubmitHandler);
