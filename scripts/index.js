@@ -1,7 +1,9 @@
 // Получение информации профиля
-const profileBlock = document.querySelector(".profile");
-const userName = profileBlock.querySelector(".profile__name");
-const userSignature = profileBlock.querySelector(".profile__signature");
+const profile = document.querySelector(".profile");
+const userName = profile.querySelector(".profile__name");
+const userSignature = profile.querySelector(".profile__signature");
+
+const cards = document.querySelector(".cards"); // Находим секцию с карточками
 
 // Находим форму и поля формы пользователя
 const popupEditProfile = document.querySelector(".popup_type_edit"); // Находим попап пользователя
@@ -21,15 +23,15 @@ const pictureLink = popupImageFullscreen.querySelector(".popup__big-image");
 const pictureName = popupImageFullscreen.querySelector(".popup__image-caption");
 
 // Находим кнопки
-const openPopupEditBtn = profileBlock.querySelector(".profile__edit-button");
-const openPopupAddBtn = profileBlock.querySelector(".profile__add-button");
+const openPopupEditBtn = profile.querySelector(".profile__edit-button");
+const openPopupAddBtn = profile.querySelector(".profile__add-button");
 const closePopupEditBtn = popupEditProfile.querySelector(".popup__close-button");
 const closePopupAddBtn = popupAddNewCard.querySelector(".popup__close-button");
 const closePopupImageBtn = popupImageFullscreen.querySelector(".popup__close-button");
 
 // Добавление начальных карточек
 initialCards.forEach(function (cardData) {
-  addCard(cardData);
+  addStartCard(cardData);
 });
 
 // Функция открытия попапа
@@ -57,6 +59,13 @@ function openPopupImage(cardData) {
   pictureName.textContent = cardData.name;
 
   openPopup(popupImageFullscreen);
+}
+
+// Функция закрытия попапа по клику вне модального окна
+function closePopupOverlay(evt, popup) {
+  if (evt.target == popup) {
+    closePopup(popup);
+  }
 }
 
 // Обработчик «отправки» формы данных пользователя
@@ -95,16 +104,23 @@ function createCard(cardData) {
   cardPlace.src = cardData.link;
   cardPlace.alt = cardData.name;
 
-  setEventListener(cardElement, cardData); // Вызываем функцию для прослушивания событий
+  setEventListeners(cardElement, cardData); // Вызываем функцию для прослушивания событий
 
   return cardElement;
+}
+
+// Функция добавления начальных карточек
+function addStartCard(cardData) {
+  const cardElement = createCard(cardData);
+
+  cards.append(cardElement); // Пушим карточку
 }
 
 // Функция добавления карточки
 function addCard(cardData) {
   const cardElement = createCard(cardData);
 
-  document.querySelector(".cards").prepend(cardElement); // Пушим карточку
+  cards.prepend(cardElement); // Пушим карточку
 }
 
 // Функция переключения лайка
@@ -118,11 +134,16 @@ function removeCard(cardElement) {
 }
 
 // Функция прослушивания взаимодействия с карточками
-function setEventListener(cardElement, cardData) {
+function setEventListeners(cardElement, cardData) {
   cardElement.querySelector(".cards__like-button").addEventListener("click", toggleLike);
   cardElement.querySelector(".cards__place").addEventListener("click", () => openPopupImage(cardData));
   cardElement.querySelector(".cards__remove-button").addEventListener("click", () => removeCard(cardElement));
 }
+
+// Слушаем клики вне модального окна
+popupEditProfile.addEventListener("click", (evt) => closePopupOverlay(evt, popupEditProfile));
+popupAddNewCard.addEventListener("click", (evt) => closePopupOverlay(evt, popupAddNewCard));
+popupImageFullscreen.addEventListener("click", (evt) => closePopupOverlay(evt, popupImageFullscreen));
 
 // Слушаем кнопки
 openPopupEditBtn.addEventListener("click", openPopupEdit);
