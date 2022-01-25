@@ -28,7 +28,7 @@ const isValid = (formElement, inputElement) => {
 };
 
 // Функция, добавляющая слушатель событий всем полям ввода внутри формы
-const setFormEventListeners = (formElement) => {
+const setEventListeners = (formElement) => {
   const inputList = Array.from(formElement.querySelectorAll(".popup__form-item")); // Массив из всех полей формы
   const buttonElement = formElement.querySelector(".popup__save-button");
 
@@ -40,19 +40,6 @@ const setFormEventListeners = (formElement) => {
       isValid(formElement, inputElement);
       toggleButtonState(inputList, buttonElement);
     });
-  });
-};
-
-// Функция включения JS валидации для всех форм
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll(".popup__form"));
-
-  formList.forEach((formElement) => {
-    formElement.addEventListener("submit", (evt) => {
-      evt.preventDefault(); // Отменим стандартное поведение
-    });
-
-    setFormEventListeners(formElement); // Для каждой формы вызовем функцию setFormEventListeners
   });
 };
 
@@ -73,3 +60,18 @@ const toggleButtonState = (inputList, buttonElement) => {
     buttonElement.removeAttribute("disabled");
   }
 };
+
+// Функция включения JS валидации для всех форм
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll(".popup__form"));
+
+  formList.forEach((formElement) => {
+    formElement.addEventListener("submit", (evt) => {
+      evt.preventDefault(); // Отменим стандартное поведение
+    });
+
+    setEventListeners(formElement); // Для каждой формы вызовем функцию setEventListeners
+  });
+};
+
+export { enableValidation };

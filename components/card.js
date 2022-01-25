@@ -1,3 +1,6 @@
+import { openPopupImage } from "./modal.js";
+import { initialCards } from "./initial-card.js";
+
 const cards = document.querySelector(".cards"); // Находим секцию с карточками
 
 // Добавление начальных карточек
@@ -52,3 +55,5 @@ function setEventListeners(cardElement, cardData) {
   cardElement.querySelector(".cards__place").addEventListener("click", () => openPopupImage(cardData));
   cardElement.querySelector(".cards__remove-button").addEventListener("click", () => removeCard(cardElement));
 }
+
+export { addCard };

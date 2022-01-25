@@ -1,3 +1,6 @@
+import { enableValidation } from "./validate.js";
+import { addCard } from "./card.js";
+
 // Получение информации профиля
 const profile = document.querySelector(".profile");
 const userName = profile.querySelector(".profile__name");
@@ -114,3 +117,5 @@ closePopupImageBtn.addEventListener("click", () => closePopup(popupImageFullscre
 // Слушаем отправку формы
 formEditElement.addEventListener("submit", formEditSubmitHandler);
 formAddElement.addEventListener("submit", formAddSubmitHandler);
+
+export { openPopupImage };
