@@ -1,6 +1,5 @@
 .popup__form-item {
   padding: 0;
-  margin-top: 30px;
   min-width: 358px;
   min-height: 27px;
   border-style: none;
@@ -10,10 +9,6 @@
   font-size: 14px;
   line-height: 1.22;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.popup__form-item:first-child {
-  margin-top: 0;
 }
 
 .popup__form-item:focus {

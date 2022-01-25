@@ -1,0 +1,14 @@
+.popup__form-item-error {
+  display: none;
+  position: absolute;
+  top: 32px;
+  left: 0;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #FF0000;
+
+  z-index: 100;
+}

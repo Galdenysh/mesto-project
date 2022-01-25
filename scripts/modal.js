@@ -30,6 +30,7 @@ const closePopupImageBtn = popupImageFullscreen.querySelector(".popup__close-but
 // Функция открытия попапа
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  enableValidation();
 
   document.addEventListener("keydown", closePopupEsc);
 }
