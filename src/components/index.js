@@ -1,3 +1,5 @@
+import "../pages/index.css";
+
 import { initialCards } from "./initial-card.js";
 import { addStartCard } from "./card.js";
 import { enableValidation } from "./validate.js";

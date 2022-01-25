@@ -8,19 +8,17 @@
     <meta name="keywords" content="Адаптивная верстка" />
     <meta name="author" content="Игорь Петров" />
     <title>Место</title>
-    <link rel="stylesheet" href="./pages/index.css" />
-    <link rel="shortcut icon" href="./images/favicon/logo-48.png" />
+    <!-- <link rel="stylesheet" href="./pages/index.css" /> -->
+    <!-- <link rel="shortcut icon" href="./images/favicon/logo-48.png" /> -->
     <base target="_blank" />
   </head>
   <body>
     <div class="page">
-      <header class="header page__header">
-        <img class="header__logo" src="./images/mesto_logo.svg" alt="Логотип проекта Место" />
-      </header>
+      <header class="header page__header"><img class="header__logo" src="<%=require("./images/mesto_logo.svg")%>" alt="Логотип проекта Место" /></header>
       <main class="content page__content">
         <section class="profile">
           <div class="profile__info">
-            <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар профиля" />
+            <img class="profile__avatar" src="<%=require("./images/avatar.jpg")%>" alt="Аватар профиля" />
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__signature">Исследователь океана</p>
             <button class="profile__edit-button" type="button"></button>
@@ -124,6 +122,6 @@
       </article>
     </template>
 
-    <script src="./components/index.js" type="module"></script>
+    <!-- <script src="./components/index.js" type="module"></script> -->
   </body>
 </html>
