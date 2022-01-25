@@ -1,44 +1,44 @@
 // Функция, которая добавляет класс с ошибкой
-const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (selectorList, formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`); // Выбираем элемент ошибки на основе уникального класса
 
-  inputElement.classList.add("popup__form-item_type_error");
+  inputElement.classList.add(`${selectorList.inputErrorClass}`);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add("popup__form-item-error_active");
+  errorElement.classList.add(`${selectorList.errorClass}`);
 };
 
 // Функция, которая удаляет класс с ошибкой
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (selectorList, formElement, inputElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`); // Выбираем элемент ошибки на основе уникального класса
 
-  inputElement.classList.remove("popup__form-item_type_error");
+  inputElement.classList.remove(`${selectorList.inputErrorClass}`);
   errorElement.textContent = "";
-  errorElement.classList.remove("popup__form-item-error_active");
+  errorElement.classList.remove(`${selectorList.errorClass}`);
 };
 
 // Функция, которая проверяет валидность поля
-const isValid = (formElement, inputElement) => {
+const isValid = (selectorList, formElement, inputElement) => {
   if (!inputElement.validity.valid) {
     // Если поле не проходит валидацию, покажем ошибку
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(selectorList, formElement, inputElement, inputElement.validationMessage);
   } else {
     // Если проходит, скроем
-    hideInputError(formElement, inputElement);
+    hideInputError(selectorList, formElement, inputElement);
   }
 };
 
 // Функция, добавляющая слушатель событий всем полям ввода внутри формы
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll(".popup__form-item")); // Массив из всех полей формы
-  const buttonElement = formElement.querySelector(".popup__save-button");
+const setEventListeners = (selectorList, formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll(`${selectorList.inputSelector}`)); // Массив из всех полей формы
+  const buttonElement = formElement.querySelector(`${selectorList.submitButtonSelector}`);
 
-  toggleButtonState(inputList, buttonElement); // Вызовем toggleButtonState, чтобы не ждать ввода данных в поля
+  toggleButtonState(selectorList, inputList, buttonElement); // Вызовем toggleButtonState, чтобы не ждать ввода данных в поля
 
   // Каждому элементу добавляем слушатель
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
-      isValid(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      isValid(selectorList, formElement, inputElement);
+      toggleButtonState(selectorList, inputList, buttonElement);
     });
   });
 };
@@ -51,26 +51,26 @@ const hasInvalidInput = (inputList) => {
 };
 
 // Функция включение кнопки при валидности полей
-const toggleButtonState = (inputList, buttonElement) => {
+const toggleButtonState = (selectorList, inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add("popup__save-button_inactive");
+    buttonElement.classList.add(`${selectorList.inactiveButtonClass}`);
     buttonElement.setAttribute("disabled", true);
   } else {
-    buttonElement.classList.remove("popup__save-button_inactive");
+    buttonElement.classList.remove(`${selectorList.inactiveButtonClass}`);
     buttonElement.removeAttribute("disabled");
   }
 };
 
 // Функция включения JS валидации для всех форм
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll(".popup__form"));
+const enableValidation = (selectorList) => {
+  const formList = Array.from(document.querySelectorAll(`${selectorList.formSelector}`));
 
   formList.forEach((formElement) => {
     formElement.addEventListener("submit", (evt) => {
       evt.preventDefault(); // Отменим стандартное поведение
     });
 
-    setEventListeners(formElement); // Для каждой формы вызовем функцию setEventListeners
+    setEventListeners(selectorList, formElement); // Для каждой формы вызовем функцию setEventListeners
   });
 };
 
