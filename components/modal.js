@@ -1,4 +1,3 @@
-import { enableValidation } from "./validate.js";
 import { addCard } from "./card.js";
 
 // Получение информации профиля
@@ -12,28 +11,20 @@ const formEditElement = popupEditProfile.querySelector(".popup__form");
 const nameInput = formEditElement.querySelector(".popup__form-item_select_name");
 const signatureInput = formEditElement.querySelector(".popup__form-item_select_signature");
 
+// Находим попап с просмотром фотографии и его элементы
+const popupImageFullscreen = document.querySelector(".popup_type_image");
+const pictureLink = popupImageFullscreen.querySelector(".popup__big-image");
+const pictureName = popupImageFullscreen.querySelector(".popup__image-caption");
+
 // Находим форму добавления места
 const popupAddNewCard = document.querySelector(".popup_type_add"); // Находим попап добавления места
 const formAddElement = popupAddNewCard.querySelector(".popup__form");
 const placeNameInput = formAddElement.querySelector(".popup__form-item_select_place-name");
 const pictureUrlInput = formAddElement.querySelector(".popup__form-item_select_picture-url");
 
-// Находим попап с просмотром фотографии и его элементы
-const popupImageFullscreen = document.querySelector(".popup_type_image");
-const pictureLink = popupImageFullscreen.querySelector(".popup__big-image");
-const pictureName = popupImageFullscreen.querySelector(".popup__image-caption");
-
-// Находим кнопки
-const openPopupEditBtn = profile.querySelector(".profile__edit-button");
-const openPopupAddBtn = profile.querySelector(".profile__add-button");
-const closePopupEditBtn = popupEditProfile.querySelector(".popup__close-button");
-const closePopupAddBtn = popupAddNewCard.querySelector(".popup__close-button");
-const closePopupImageBtn = popupImageFullscreen.querySelector(".popup__close-button");
-
 // Функция открытия попапа
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  enableValidation();
 
   document.addEventListener("keydown", closePopupEsc);
 }
@@ -102,20 +93,18 @@ function formAddSubmitHandler(evt) {
   closePopup(popupAddNewCard);
 }
 
-// Слушаем клики вне модального окна
-popupEditProfile.addEventListener("click", (evt) => closePopupOverlay(evt, popupEditProfile));
-popupAddNewCard.addEventListener("click", (evt) => closePopupOverlay(evt, popupAddNewCard));
-popupImageFullscreen.addEventListener("click", (evt) => closePopupOverlay(evt, popupImageFullscreen));
-
-// Слушаем кнопки
-openPopupEditBtn.addEventListener("click", openPopupEdit);
-openPopupAddBtn.addEventListener("click", () => openPopup(popupAddNewCard));
-closePopupEditBtn.addEventListener("click", () => closePopup(popupEditProfile));
-closePopupAddBtn.addEventListener("click", () => closePopup(popupAddNewCard));
-closePopupImageBtn.addEventListener("click", () => closePopup(popupImageFullscreen));
-
-// Слушаем отправку формы
-formEditElement.addEventListener("submit", formEditSubmitHandler);
-formAddElement.addEventListener("submit", formAddSubmitHandler);
-
-export { openPopupImage };
+export {
+  openPopup,
+  openPopupEdit,
+  openPopupImage,
+  closePopup,
+  closePopupOverlay,
+  formEditSubmitHandler,
+  formAddSubmitHandler,
+  profile,
+  popupEditProfile,
+  popupAddNewCard,
+  popupImageFullscreen,
+  formEditElement,
+  formAddElement,
+};
