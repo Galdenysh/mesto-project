@@ -1,22 +1,23 @@
 import "../pages/index.css";
 
-import { initialCards } from "./initial-card.js";
-import { addStartCard } from "./card.js";
 import { enableValidation } from "./validate.js";
+import { addStartCard } from "./card.js";
 import {
   openPopup,
   openPopupProfile,
   closePopup,
-  formEditSubmitHandler,
-  formAddSubmitHandler,
+  formProfileSubmitHandler,
+  formNewCardSubmitHandler,
   profile,
+  userName,
+  userSignature,
   popupNewCard,
   formProfileElement,
   formNewCardElement,
 } from "./modal.js";
-import { cardsRequest } from "./api.js";
+import { getInitialCards, getProfileInfo } from "./api.js";
 
-const validationSettings = {
+const selectorList = {
   formSelector: ".popup__form",
   inputSelector: ".popup__form-item",
   submitButtonSelector: ".popup__save-button",
@@ -30,12 +31,24 @@ const popups = document.querySelectorAll(".popup");
 const openPopupProfileBtn = profile.querySelector(".profile__edit-button");
 const openPopupNewCardBtn = profile.querySelector(".profile__add-button");
 
-// Добавление начальных карточек
-// initialCards.forEach(function (cardData) {
-//   addStartCard(cardData);
-// });
+// Функция получения начальных карточек
+const renderResultInitialCards = (initialCards) => {
+  initialCards.forEach(function (cardData) {
+    addStartCard(cardData);
+  });
+};
 
-enableValidation(validationSettings);
+// Функция получения начальных информация о профиле с сервера
+const renderResultProfileInfo = (profileInfo) => {
+  userName.textContent = profileInfo.name;
+  userSignature.textContent = profileInfo.about;
+};
+
+enableValidation(selectorList); // Вызов функции валидации форм
+
+// Вызов функций получения запросов с сервера
+getInitialCards();
+getProfileInfo();
 
 // Функция навешиваения слушателей на все попапы
 popups.forEach((popup) => {
@@ -56,19 +69,7 @@ openPopupProfileBtn.addEventListener("click", openPopupProfile);
 openPopupNewCardBtn.addEventListener("click", () => openPopup(popupNewCard));
 
 // Слушаем отправку формы
-formProfileElement.addEventListener("submit", formEditSubmitHandler);
-formNewCardElement.addEventListener("submit", formAddSubmitHandler);
+formProfileElement.addEventListener("submit", formProfileSubmitHandler);
+formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
-export { validationSettings };
-
-cardsRequest();
-
-fetch("https://nomoreparties.co/v1/plus-cohort-6/users/me", {
-  headers: {
-    authorization: "8aaf6757-8c7f-4d9e-9e64-5effc217e908",
-  },
-})
-  .then((res) => res.json())
-  .then((result) => {
-    console.log(result);
-  });
+export { selectorList, renderResultInitialCards, renderResultProfileInfo };

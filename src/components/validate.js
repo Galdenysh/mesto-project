@@ -74,4 +74,4 @@ const enableValidation = (selectorList) => {
   });
 };
 
-export { enableValidation };
+export { enableValidation, toggleButtonState };
