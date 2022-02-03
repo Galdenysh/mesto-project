@@ -1,4 +1,6 @@
 import { addCard } from "./card.js";
+import { enableValidation } from "./validate.js";
+import { validationSettings } from "./index.js";
 
 // Получение информации профиля
 const profile = document.querySelector(".profile");
@@ -6,10 +8,10 @@ const userName = profile.querySelector(".profile__name");
 const userSignature = profile.querySelector(".profile__signature");
 
 // Находим форму и поля формы пользователя
-const popupEditProfile = document.querySelector(".popup_type_edit"); // Находим попап пользователя
-const formEditElement = popupEditProfile.querySelector(".popup__form");
-const nameInput = formEditElement.querySelector(".popup__form-item_select_name");
-const signatureInput = formEditElement.querySelector(".popup__form-item_select_signature");
+const popupProfile = document.querySelector(".popup_type_edit"); // Находим попап пользователя
+const formProfileElement = popupProfile.querySelector(".popup__form");
+const nameInput = formProfileElement.querySelector(".popup__form-item_select_name");
+const signatureInput = formProfileElement.querySelector(".popup__form-item_select_signature");
 
 // Находим попап с просмотром фотографии и его элементы
 const popupImageFullscreen = document.querySelector(".popup_type_image");
@@ -17,10 +19,10 @@ const pictureLink = popupImageFullscreen.querySelector(".popup__big-image");
 const pictureName = popupImageFullscreen.querySelector(".popup__image-caption");
 
 // Находим форму добавления места
-const popupAddNewCard = document.querySelector(".popup_type_add"); // Находим попап добавления места
-const formAddElement = popupAddNewCard.querySelector(".popup__form");
-const placeNameInput = formAddElement.querySelector(".popup__form-item_select_place-name");
-const pictureUrlInput = formAddElement.querySelector(".popup__form-item_select_picture-url");
+const popupNewCard = document.querySelector(".popup_type_add"); // Находим попап добавления места
+const formNewCardElement = popupNewCard.querySelector(".popup__form");
+const placeNameInput = formNewCardElement.querySelector(".popup__form-item_select_place-name");
+const pictureUrlInput = formNewCardElement.querySelector(".popup__form-item_select_picture-url");
 
 // Функция открытия попапа
 function openPopup(popup) {
@@ -37,11 +39,11 @@ function closePopup(popup) {
 }
 
 // Функция открытия попапа пользователя и заполнения полей формы из информации профиля
-function openPopupEdit() {
+function openPopupProfile() {
   nameInput.value = userName.textContent;
   signatureInput.value = userSignature.textContent;
 
-  openPopup(popupEditProfile);
+  openPopup(popupProfile);
 }
 
 // Функция открытия попапа с просмотром фотографии
@@ -53,19 +55,12 @@ function openPopupImage(cardData) {
   openPopup(popupImageFullscreen);
 }
 
-// Функция закрытия попапа по клику вне модального окна
-function closePopupOverlay(evt, popup) {
-  if (evt.target == popup) {
-    closePopup(popup);
-  }
-}
-
 // Функция закрытия попапа по нажатию клавиши Esc
 function closePopupEsc(evt) {
+  const openedPopup = document.querySelector(".popup_opened"); // Находим открытый попап
+
   if (evt.key === "Escape") {
-    closePopup(popupEditProfile);
-    closePopup(popupAddNewCard);
-    closePopup(popupImageFullscreen);
+    closePopup(openedPopup);
   }
 }
 
@@ -77,7 +72,7 @@ function formEditSubmitHandler(evt) {
   userName.textContent = nameInput.value;
   userSignature.textContent = signatureInput.value;
 
-  closePopup(popupEditProfile);
+  closePopup(popupProfile);
 }
 
 // Обработчик «отправки» формы добавления места
@@ -88,23 +83,22 @@ function formAddSubmitHandler(evt) {
   const cardData = { name: placeNameInput.value, link: pictureUrlInput.value };
 
   addCard(cardData); // вызываем функцию добавления карточки и посылаем значения форм
-  formAddElement.reset(); // Опусташаем поля формы
+  formNewCardElement.reset(); // Опусташаем поля формы
 
-  closePopup(popupAddNewCard);
+  enableValidation(validationSettings);
+
+  closePopup(popupNewCard);
 }
 
 export {
   openPopup,
-  openPopupEdit,
+  openPopupProfile,
   openPopupImage,
   closePopup,
-  closePopupOverlay,
   formEditSubmitHandler,
   formAddSubmitHandler,
   profile,
-  popupEditProfile,
-  popupAddNewCard,
-  popupImageFullscreen,
-  formEditElement,
-  formAddElement,
+  popupNewCard,
+  formProfileElement,
+  formNewCardElement,
 };
