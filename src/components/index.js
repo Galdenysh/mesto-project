@@ -14,6 +14,7 @@ import {
   formProfileElement,
   formNewCardElement,
 } from "./modal.js";
+import { cardsRequest } from "./api.js";
 
 const validationSettings = {
   formSelector: ".popup__form",
@@ -23,7 +24,6 @@ const validationSettings = {
   inputErrorClass: "popup__form-item_type_error",
   errorClass: "popup__form-item-error_active",
 };
-
 const popups = document.querySelectorAll(".popup");
 
 // Находим кнопки
@@ -31,9 +31,9 @@ const openPopupProfileBtn = profile.querySelector(".profile__edit-button");
 const openPopupNewCardBtn = profile.querySelector(".profile__add-button");
 
 // Добавление начальных карточек
-initialCards.forEach(function (cardData) {
-  addStartCard(cardData);
-});
+// initialCards.forEach(function (cardData) {
+//   addStartCard(cardData);
+// });
 
 enableValidation(validationSettings);
 
@@ -60,3 +60,15 @@ formProfileElement.addEventListener("submit", formEditSubmitHandler);
 formNewCardElement.addEventListener("submit", formAddSubmitHandler);
 
 export { validationSettings };
+
+cardsRequest();
+
+fetch("https://nomoreparties.co/v1/plus-cohort-6/users/me", {
+  headers: {
+    authorization: "8aaf6757-8c7f-4d9e-9e64-5effc217e908",
+  },
+})
+  .then((res) => res.json())
+  .then((result) => {
+    console.log(result);
+  });
