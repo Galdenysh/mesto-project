@@ -7,15 +7,15 @@ import {
   openPopup,
   openPopupProfile,
   closePopup,
-  formEditSubmitHandler,
-  formAddSubmitHandler,
+  formProfileSubmitHandler,
+  formNewCardSubmitHandler,
   profile,
   popupNewCard,
   formProfileElement,
   formNewCardElement,
 } from "./modal.js";
 
-const validationSettings = {
+const selectorList = {
   formSelector: ".popup__form",
   inputSelector: ".popup__form-item",
   submitButtonSelector: ".popup__save-button",
@@ -35,7 +35,7 @@ initialCards.forEach(function (cardData) {
   addStartCard(cardData);
 });
 
-enableValidation(validationSettings);
+enableValidation(selectorList);
 
 // Функция навешиваения слушателей на все попапы
 popups.forEach((popup) => {
@@ -56,7 +56,7 @@ openPopupProfileBtn.addEventListener("click", openPopupProfile);
 openPopupNewCardBtn.addEventListener("click", () => openPopup(popupNewCard));
 
 // Слушаем отправку формы
-formProfileElement.addEventListener("submit", formEditSubmitHandler);
-formNewCardElement.addEventListener("submit", formAddSubmitHandler);
+formProfileElement.addEventListener("submit", formProfileSubmitHandler);
+formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
-export { validationSettings };
+export { selectorList };

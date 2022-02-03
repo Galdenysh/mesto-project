@@ -1,6 +1,6 @@
 import { addCard } from "./card.js";
-import { enableValidation } from "./validate.js";
-import { validationSettings } from "./index.js";
+import { toggleButtonState } from "./validate.js";
+import { selectorList } from "./index.js";
 
 // Получение информации профиля
 const profile = document.querySelector(".profile");
@@ -57,15 +57,15 @@ function openPopupImage(cardData) {
 
 // Функция закрытия попапа по нажатию клавиши Esc
 function closePopupEsc(evt) {
-  const openedPopup = document.querySelector(".popup_opened"); // Находим открытый попап
-
   if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened"); // Находим открытый попап
+
     closePopup(openedPopup);
   }
 }
 
 // Обработчик «отправки» формы данных пользователя
-function formEditSubmitHandler(evt) {
+function formProfileSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы
 
   // Записываем в профиль значение из полей форм
@@ -76,16 +76,17 @@ function formEditSubmitHandler(evt) {
 }
 
 // Обработчик «отправки» формы добавления места
-function formAddSubmitHandler(evt) {
+function formNewCardSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы
 
-  // Записываем в целевой объект значение из полей форм
-  const cardData = { name: placeNameInput.value, link: pictureUrlInput.value };
+  const cardData = { name: placeNameInput.value, link: pictureUrlInput.value }; // Записываем в целевой объект значение из полей форм
+  const inputList = Array.from(formNewCardElement.querySelectorAll(`${selectorList.inputSelector}`)); // Массив из всех полей формы
+  const buttonElement = formNewCardElement.querySelector(`${selectorList.submitButtonSelector}`);
 
   addCard(cardData); // вызываем функцию добавления карточки и посылаем значения форм
   formNewCardElement.reset(); // Опусташаем поля формы
 
-  enableValidation(validationSettings);
+  toggleButtonState(selectorList, inputList, buttonElement);
 
   closePopup(popupNewCard);
 }
@@ -95,8 +96,8 @@ export {
   openPopupProfile,
   openPopupImage,
   closePopup,
-  formEditSubmitHandler,
-  formAddSubmitHandler,
+  formProfileSubmitHandler,
+  formNewCardSubmitHandler,
   profile,
   popupNewCard,
   formProfileElement,
