@@ -1,12 +1,12 @@
-.popup__place {
-  margin: 0 auto;
+.popup__fieldset {
+  margin: 54px auto 0;
   padding: 0;
   max-width: 358px;
   border-style: none;
 }
 
 @media screen and (max-width: 619px) {
-  .popup__place {
+  .popup__fieldset {
     max-width: 238px;
   }
 }

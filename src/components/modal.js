@@ -1,12 +1,17 @@
-import { addCard } from "./card.js";
 import { toggleButtonState } from "./validate.js";
 import { selectorList } from "./index.js";
-import { sendProfileInfo, sendNewCard } from "./api.js";
+import { sendProfileInfo, sendNewCard, sendAvatar } from "./api.js";
 
 // Получение информации профиля
 const profile = document.querySelector(".profile");
 const userName = profile.querySelector(".profile__name");
 const userSignature = profile.querySelector(".profile__signature");
+const userAvatar = profile.querySelector(".profile__avatar-image");
+
+// Находим форму редактирования аватара
+const popupAvatar = document.querySelector(".popup_type_avatar"); // Находим попап редактирования аватара
+const formAvatarElement = popupAvatar.querySelector(".popup__form");
+const avatarInput = formAvatarElement.querySelector(".popup__form-item_select_avatar");
 
 // Находим форму и поля формы пользователя
 const popupProfile = document.querySelector(".popup_type_profile"); // Находим попап пользователя
@@ -65,6 +70,13 @@ function closePopupEsc(evt) {
   }
 }
 
+// Обработчик «отправки» формы обновления аватара
+const formAvatarSubmitHandler = () => {
+  sendAvatar(avatarInput);
+
+  closePopup(popupAvatar);
+};
+
 // Обработчик «отправки» формы данных пользователя
 function formProfileSubmitHandler() {
   sendProfileInfo(nameInput, signatureInput); // Посылаем запрос на сервер на изменение информации профиля
@@ -91,12 +103,16 @@ export {
   openPopupProfile,
   openPopupImage,
   closePopup,
+  formAvatarSubmitHandler,
   formProfileSubmitHandler,
   formNewCardSubmitHandler,
   profile,
   userName,
   userSignature,
+  userAvatar,
+  popupAvatar,
   popupNewCard,
+  formAvatarElement,
   formProfileElement,
   formNewCardElement,
 };

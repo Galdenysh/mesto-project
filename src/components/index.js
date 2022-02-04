@@ -6,12 +6,16 @@ import {
   openPopup,
   openPopupProfile,
   closePopup,
+  formAvatarElement,
   formProfileSubmitHandler,
   formNewCardSubmitHandler,
   profile,
   userName,
   userSignature,
+  userAvatar,
+  popupAvatar,
   popupNewCard,
+  formAvatarSubmitHandler,
   formProfileElement,
   formNewCardElement,
 } from "./modal.js";
@@ -28,6 +32,7 @@ const selectorList = {
 const popups = document.querySelectorAll(".popup");
 
 // Находим кнопки
+const openPopupAvatarBtn = profile.querySelector(".profile__avatar-button");
 const openPopupProfileBtn = profile.querySelector(".profile__edit-button");
 const openPopupNewCardBtn = profile.querySelector(".profile__add-button");
 
@@ -37,6 +42,7 @@ let currentUserId = {};
 const renderResultProfileInfo = (profileInfo) => {
   userName.textContent = profileInfo.name;
   userSignature.textContent = profileInfo.about;
+  userAvatar.src = profileInfo.avatar;
   currentUserId = profileInfo._id;
 };
 
@@ -45,6 +51,10 @@ const renderResultInitialCards = (initialCards) => {
   initialCards.forEach(function (cardData) {
     addStartCard(cardData);
   });
+};
+
+const renderResultAvatar = (profileInfo) => {
+  userAvatar.src = profileInfo.avatar;
 };
 
 // Функция получения новой карточки
@@ -78,11 +88,13 @@ popups.forEach((popup) => {
 });
 
 // Слушаем кнопки
+openPopupAvatarBtn.addEventListener("click", () => openPopup(popupAvatar));
 openPopupProfileBtn.addEventListener("click", openPopupProfile);
 openPopupNewCardBtn.addEventListener("click", () => openPopup(popupNewCard));
 
 // Слушаем отправку формы
+formAvatarElement.addEventListener("submit", formAvatarSubmitHandler);
 formProfileElement.addEventListener("submit", formProfileSubmitHandler);
 formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
-export { selectorList, currentUserId, renderResultInitialCards, renderResultProfileInfo, renderResultNewCard, renderResultLikeCount };
+export { selectorList, currentUserId, renderResultInitialCards, renderResultProfileInfo, renderResultAvatar, renderResultNewCard, renderResultLikeCount };

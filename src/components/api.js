@@ -1,4 +1,4 @@
-import { renderResultInitialCards, renderResultProfileInfo, renderResultNewCard, renderResultLikeCount } from "./index.js";
+import { renderResultProfileInfo, renderResultInitialCards, renderResultAvatar, renderResultNewCard, renderResultLikeCount } from "./index.js";
 
 // Универсальная функция конфигурации запросов
 const config = {
@@ -36,6 +36,24 @@ const getInitialCards = () => {
     .then((res) => getResponseData(res))
     .then((initialCards) => {
       renderResultInitialCards(initialCards);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// Функция редактирования аватара
+const sendAvatar = (avatarLink) => {
+  fetch(`${config.baseURL}/users/me/avatar`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: avatarLink.value,
+    }),
+  })
+    .then((res) => getResponseData(res))
+    .then((profileInfo) => {
+      renderResultAvatar(profileInfo);
     })
     .catch((err) => {
       console.log(err);
@@ -122,4 +140,4 @@ const deleteLikeCard = (card, cardID) => {
     });
 };
 
-export { getProfileInfo, getInitialCards, sendProfileInfo, sendNewCard, deleteCard, likeCard, deleteLikeCard };
+export { getProfileInfo, getInitialCards, sendAvatar, sendProfileInfo, sendNewCard, deleteCard, likeCard, deleteLikeCard };
