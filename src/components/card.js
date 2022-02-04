@@ -8,11 +8,13 @@ function createCard(cardData) {
   const cardElement = cardTemplate.querySelector(".cards__card").cloneNode(true);
   const cardPlace = cardElement.querySelector(".cards__place");
   const cardTitle = cardElement.querySelector(".cards__title");
+  const cardLikeCount = cardElement.querySelector(".cards__like-number");
 
   // Заполняем карточку
   cardTitle.textContent = cardData.name;
   cardPlace.src = cardData.link;
   cardPlace.alt = cardData.name;
+  cardLikeCount.textContent = cardData.likes.length;
 
   setEventListeners(cardElement, cardData); // Вызываем функцию для прослушивания событий
 
