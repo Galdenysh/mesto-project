@@ -5,13 +5,13 @@
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  align-items: baseline;
+  align-items: center;
   grid-template-columns: 215px auto;
   grid-template-rows: 282px auto;
-  gap: 25px;
+  gap: 0 25px;
   grid-template-areas: 
     "place place"
-    "title like-button";
+    "title like";
   position: relative;
 
   animation-name: dissolve;

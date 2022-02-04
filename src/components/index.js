@@ -1,7 +1,7 @@
 import "../pages/index.css";
 
 import { enableValidation } from "./validate.js";
-import { addStartCard } from "./card.js";
+import { addStartCard, addCard } from "./card.js";
 import {
   openPopup,
   openPopupProfile,
@@ -15,7 +15,7 @@ import {
   formProfileElement,
   formNewCardElement,
 } from "./modal.js";
-import { getInitialCards, getProfileInfo } from "./api.js";
+import { getProfileInfo, getInitialCards } from "./api.js";
 
 const selectorList = {
   formSelector: ".popup__form",
@@ -38,17 +38,22 @@ const renderResultInitialCards = (initialCards) => {
   });
 };
 
-// Функция получения начальных информация о профиле с сервера
+// Функция получения информации о профиле с сервера
 const renderResultProfileInfo = (profileInfo) => {
   userName.textContent = profileInfo.name;
   userSignature.textContent = profileInfo.about;
 };
 
+// Функция получения новой карточки
+const renderResultNewCard = (cardData) => {
+  addCard(cardData);
+};
+
 enableValidation(selectorList); // Вызов функции валидации форм
 
 // Вызов функций получения запросов с сервера
-getInitialCards();
 getProfileInfo();
+getInitialCards();
 
 // Функция навешиваения слушателей на все попапы
 popups.forEach((popup) => {
@@ -72,4 +77,4 @@ openPopupNewCardBtn.addEventListener("click", () => openPopup(popupNewCard));
 formProfileElement.addEventListener("submit", formProfileSubmitHandler);
 formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
-export { selectorList, renderResultInitialCards, renderResultProfileInfo };
+export { selectorList, renderResultInitialCards, renderResultProfileInfo, renderResultNewCard };

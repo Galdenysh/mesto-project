@@ -1,5 +1,4 @@
 .cards__like-button {
-  grid-area: like-button;
   background: no-repeat center url(../../../images/icon-like.svg);
   padding: 0;
   border: none;

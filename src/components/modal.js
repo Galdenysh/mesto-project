@@ -1,6 +1,7 @@
 import { addCard } from "./card.js";
 import { toggleButtonState } from "./validate.js";
 import { selectorList } from "./index.js";
+import { sendProfileInfo, sendNewCard } from "./api.js";
 
 // Получение информации профиля
 const profile = document.querySelector(".profile");
@@ -65,25 +66,19 @@ function closePopupEsc(evt) {
 }
 
 // Обработчик «отправки» формы данных пользователя
-function formProfileSubmitHandler(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы
-
-  // Записываем в профиль значение из полей форм
-  userName.textContent = nameInput.value;
-  userSignature.textContent = signatureInput.value;
+function formProfileSubmitHandler() {
+  sendProfileInfo(nameInput, signatureInput); // Посылаем запрос на сервер на изменение информации профиля
 
   closePopup(popupProfile);
 }
 
 // Обработчик «отправки» формы добавления места
-function formNewCardSubmitHandler(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы
-
+function formNewCardSubmitHandler() {
   const cardData = { name: placeNameInput.value, link: pictureUrlInput.value }; // Записываем в целевой объект значение из полей форм
   const inputList = Array.from(formNewCardElement.querySelectorAll(`${selectorList.inputSelector}`)); // Массив из всех полей формы
   const buttonElement = formNewCardElement.querySelector(`${selectorList.submitButtonSelector}`);
 
-  addCard(cardData); // вызываем функцию добавления карточки и посылаем значения форм
+  sendNewCard(cardData); // Посылаем запрос на сервер на создание новой карточки
   formNewCardElement.reset(); // Опусташаем поля формы
 
   toggleButtonState(selectorList, inputList, buttonElement);
