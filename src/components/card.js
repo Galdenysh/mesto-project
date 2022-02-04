@@ -1,4 +1,6 @@
 import { openPopupImage } from "./modal.js";
+import { currentUserId } from "./index.js";
+import { deleteCard } from "./api.js";
 
 const cards = document.querySelector(".cards"); // Находим секцию с карточками
 
@@ -9,6 +11,12 @@ function createCard(cardData) {
   const cardPlace = cardElement.querySelector(".cards__place");
   const cardTitle = cardElement.querySelector(".cards__title");
   const cardLikeCount = cardElement.querySelector(".cards__like-number");
+
+  const removeBtn = cardElement.querySelector(".cards__remove-button");
+
+  if (cardData.owner._id === currentUserId) {
+    removeBtn.classList.add("cards__remove-button_visible");
+  }
 
   // Заполняем карточку
   cardTitle.textContent = cardData.name;
@@ -41,15 +49,17 @@ function toggleLike(evt) {
 }
 
 // Функция удаления карточки
-function removeCard(cardElement) {
+function removeCard(cardElement, cardData) {
   cardElement.remove();
+
+  deleteCard(cardData._id);
 }
 
 // Функция прослушивания взаимодействия с карточками
 function setEventListeners(cardElement, cardData) {
   cardElement.querySelector(".cards__like-button").addEventListener("click", toggleLike);
   cardElement.querySelector(".cards__place").addEventListener("click", () => openPopupImage(cardData));
-  cardElement.querySelector(".cards__remove-button").addEventListener("click", () => removeCard(cardElement));
+  cardElement.querySelector(".cards__remove-button").addEventListener("click", () => removeCard(cardElement, cardData));
 }
 
 export { addStartCard, addCard };

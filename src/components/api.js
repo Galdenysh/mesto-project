@@ -1,5 +1,6 @@
 import { renderResultInitialCards, renderResultProfileInfo, renderResultNewCard } from "./index.js";
 
+// Универсальная функция конфигурации запросов
 const config = {
   baseURL: "https://nomoreparties.co/v1/plus-cohort-6",
   headers: {
@@ -8,33 +9,32 @@ const config = {
   },
 };
 
+// Универсальная функция для проверки ответа от сервера
+const getResponseData = (res) => {
+  return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+};
+
 // Функция получения информации о профиле с сервера
 const getProfileInfo = () => {
   fetch(`${config.baseURL}/users/me`, { headers: config.headers })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then((res) => getResponseData(res))
     .then((profileInfo) => {
       renderResultProfileInfo(profileInfo);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
 // Функция получения карточек с сервера
 const getInitialCards = () => {
   fetch(`${config.baseURL}/cards`, { headers: config.headers })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then((res) => getResponseData(res))
     .then((initialCards) => {
       renderResultInitialCards(initialCards);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
@@ -48,15 +48,12 @@ const sendProfileInfo = (nameInput, signatureInput) => {
       about: signatureInput.value,
     }),
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then((res) => getResponseData(res))
     .then((profileInfo) => {
       renderResultProfileInfo(profileInfo);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
@@ -70,16 +67,25 @@ const sendNewCard = (cardData) => {
       link: cardData.link,
     }),
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then((res) => getResponseData(res))
     .then((cardData) => {
       renderResultNewCard(cardData);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
-export { getProfileInfo, getInitialCards, sendProfileInfo, sendNewCard };
+// Функция удаления карточки с сервера
+const deleteCard = (cardID) => {
+  fetch(`${config.baseURL}/cards/${cardID}`, {
+    method: "DELETE",
+    headers: config.headers,
+  })
+    .then((res) => getResponseData(res))
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export { getProfileInfo, getInitialCards, sendProfileInfo, sendNewCard, deleteCard };

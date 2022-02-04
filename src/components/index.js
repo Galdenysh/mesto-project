@@ -31,17 +31,20 @@ const popups = document.querySelectorAll(".popup");
 const openPopupProfileBtn = profile.querySelector(".profile__edit-button");
 const openPopupNewCardBtn = profile.querySelector(".profile__add-button");
 
-// Функция получения начальных карточек
-const renderResultInitialCards = (initialCards) => {
-  initialCards.forEach(function (cardData) {
-    addStartCard(cardData);
-  });
-};
+let currentUserId = {};
 
 // Функция получения информации о профиле с сервера
 const renderResultProfileInfo = (profileInfo) => {
   userName.textContent = profileInfo.name;
   userSignature.textContent = profileInfo.about;
+  currentUserId = profileInfo._id;
+};
+
+// Функция получения начальных карточек
+const renderResultInitialCards = (initialCards) => {
+  initialCards.forEach(function (cardData) {
+    addStartCard(cardData);
+  });
 };
 
 // Функция получения новой карточки
@@ -55,7 +58,7 @@ enableValidation(selectorList); // Вызов функции валидации 
 getProfileInfo();
 getInitialCards();
 
-// Функция навешиваения слушателей на все попапы
+// Функция навешивания слушателей на все попапы
 popups.forEach((popup) => {
   popup.addEventListener("mousedown", (evt) => {
     // Если был клик по открытому оверлею, то закроем попап
@@ -77,4 +80,4 @@ openPopupNewCardBtn.addEventListener("click", () => openPopup(popupNewCard));
 formProfileElement.addEventListener("submit", formProfileSubmitHandler);
 formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
-export { selectorList, renderResultInitialCards, renderResultProfileInfo, renderResultNewCard };
+export { selectorList, renderResultInitialCards, renderResultProfileInfo, renderResultNewCard, currentUserId };

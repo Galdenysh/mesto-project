@@ -1,4 +1,5 @@
 .cards__remove-button {
+  display: none;
   background: no-repeat center url(../../../images/icon-remove.svg);
   padding: 0;
   border: none;
