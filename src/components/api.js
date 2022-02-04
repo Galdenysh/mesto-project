@@ -1,4 +1,4 @@
-import { renderResultInitialCards, renderResultProfileInfo, renderResultNewCard } from "./index.js";
+import { renderResultInitialCards, renderResultProfileInfo, renderResultNewCard, renderResultLikeCount } from "./index.js";
 
 // Универсальная функция конфигурации запросов
 const config = {
@@ -16,7 +16,9 @@ const getResponseData = (res) => {
 
 // Функция получения информации о профиле с сервера
 const getProfileInfo = () => {
-  fetch(`${config.baseURL}/users/me`, { headers: config.headers })
+  fetch(`${config.baseURL}/users/me`, {
+    headers: config.headers,
+  })
     .then((res) => getResponseData(res))
     .then((profileInfo) => {
       renderResultProfileInfo(profileInfo);
@@ -28,7 +30,9 @@ const getProfileInfo = () => {
 
 // Функция получения карточек с сервера
 const getInitialCards = () => {
-  fetch(`${config.baseURL}/cards`, { headers: config.headers })
+  fetch(`${config.baseURL}/cards`, {
+    headers: config.headers,
+  })
     .then((res) => getResponseData(res))
     .then((initialCards) => {
       renderResultInitialCards(initialCards);
@@ -88,4 +92,34 @@ const deleteCard = (cardID) => {
     });
 };
 
-export { getProfileInfo, getInitialCards, sendProfileInfo, sendNewCard, deleteCard };
+// Функция отправки лайка на сервер
+const likeCard = (card, cardID) => {
+  fetch(`${config.baseURL}/cards/likes/${cardID}`, {
+    method: "PUT",
+    headers: config.headers,
+  })
+    .then((res) => getResponseData(res))
+    .then((cardData) => {
+      renderResultLikeCount(card, cardData);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// Функция удаления лайка с сервера
+const deleteLikeCard = (card, cardID) => {
+  fetch(`${config.baseURL}/cards/likes/${cardID}`, {
+    method: "DELETE",
+    headers: config.headers,
+  })
+    .then((res) => getResponseData(res))
+    .then((cardData) => {
+      renderResultLikeCount(card, cardData);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export { getProfileInfo, getInitialCards, sendProfileInfo, sendNewCard, deleteCard, likeCard, deleteLikeCard };

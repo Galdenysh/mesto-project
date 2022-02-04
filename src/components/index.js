@@ -52,6 +52,11 @@ const renderResultNewCard = (cardData) => {
   addCard(cardData);
 };
 
+// Функция обновления лайка
+const renderResultLikeCount = (card, cardData) => {
+  card.querySelector(".cards__like-number").textContent = cardData.likes.length;
+};
+
 enableValidation(selectorList); // Вызов функции валидации форм
 
 // Вызов функций получения запросов с сервера
@@ -80,4 +85,4 @@ openPopupNewCardBtn.addEventListener("click", () => openPopup(popupNewCard));
 formProfileElement.addEventListener("submit", formProfileSubmitHandler);
 formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
-export { selectorList, renderResultInitialCards, renderResultProfileInfo, renderResultNewCard, currentUserId };
+export { selectorList, currentUserId, renderResultInitialCards, renderResultProfileInfo, renderResultNewCard, renderResultLikeCount };

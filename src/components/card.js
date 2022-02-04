@@ -1,6 +1,6 @@
 import { openPopupImage } from "./modal.js";
 import { currentUserId } from "./index.js";
-import { deleteCard } from "./api.js";
+import { deleteCard, likeCard, deleteLikeCard } from "./api.js";
 
 const cards = document.querySelector(".cards"); // Находим секцию с карточками
 
@@ -10,9 +10,14 @@ function createCard(cardData) {
   const cardElement = cardTemplate.querySelector(".cards__card").cloneNode(true);
   const cardPlace = cardElement.querySelector(".cards__place");
   const cardTitle = cardElement.querySelector(".cards__title");
-  const cardLikeCount = cardElement.querySelector(".cards__like-number");
-
+  const cardLikesCount = cardElement.querySelector(".cards__like-number");
   const removeBtn = cardElement.querySelector(".cards__remove-button");
+  const likeBtn = cardElement.querySelector(".cards__like-button");
+  const isLiked = Boolean(cardData.likes.find((user) => user._id === currentUserId));
+
+  if (isLiked) {
+    likeBtn.classList.add("cards__like-button_active");
+  }
 
   if (cardData.owner._id === currentUserId) {
     removeBtn.classList.add("cards__remove-button_visible");
@@ -22,7 +27,7 @@ function createCard(cardData) {
   cardTitle.textContent = cardData.name;
   cardPlace.src = cardData.link;
   cardPlace.alt = cardData.name;
-  cardLikeCount.textContent = cardData.likes.length;
+  cardLikesCount.textContent = cardData.likes.length;
 
   setEventListeners(cardElement, cardData); // Вызываем функцию для прослушивания событий
 
@@ -44,7 +49,15 @@ function addCard(cardData) {
 }
 
 // Функция переключения лайка
-function toggleLike(evt) {
+function toggleLike(evt, cardData) {
+  const card = evt.target.closest(".cards__card");
+
+  if (evt.target.classList.contains("cards__like-button_active")) {
+    deleteLikeCard(card, cardData._id);
+  } else {
+    likeCard(card, cardData._id);
+  }
+
   evt.target.classList.toggle("cards__like-button_active");
 }
 
@@ -57,7 +70,7 @@ function removeCard(cardElement, cardData) {
 
 // Функция прослушивания взаимодействия с карточками
 function setEventListeners(cardElement, cardData) {
-  cardElement.querySelector(".cards__like-button").addEventListener("click", toggleLike);
+  cardElement.querySelector(".cards__like-button").addEventListener("click", (evt) => toggleLike(evt, cardData));
   cardElement.querySelector(".cards__place").addEventListener("click", () => openPopupImage(cardData));
   cardElement.querySelector(".cards__remove-button").addEventListener("click", () => removeCard(cardElement, cardData));
 }
