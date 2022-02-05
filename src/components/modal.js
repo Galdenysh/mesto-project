@@ -72,14 +72,20 @@ function closePopupEsc(evt) {
 
 // Обработчик «отправки» формы обновления аватара
 const formAvatarSubmitHandler = () => {
-  sendAvatar(avatarInput);
+  const inputList = Array.from(formAvatarElement.querySelectorAll(`${selectorList.inputSelector}`)); // Массив из всех полей формы
+  const buttonElement = formAvatarElement.querySelector(`${selectorList.submitButtonSelector}`);
+
+  sendAvatar(popupAvatar, avatarInput); // Посылаем запрос на сервер на обновление аватара
+  formAvatarElement.reset(); // Опусташаем поля формы
+
+  toggleButtonState(selectorList, inputList, buttonElement);
 
   closePopup(popupAvatar);
 };
 
 // Обработчик «отправки» формы данных пользователя
 function formProfileSubmitHandler() {
-  sendProfileInfo(nameInput, signatureInput); // Посылаем запрос на сервер на изменение информации профиля
+  sendProfileInfo(popupProfile, nameInput, signatureInput); // Посылаем запрос на сервер на изменение информации профиля
 
   closePopup(popupProfile);
 }
@@ -90,7 +96,7 @@ function formNewCardSubmitHandler() {
   const inputList = Array.from(formNewCardElement.querySelectorAll(`${selectorList.inputSelector}`)); // Массив из всех полей формы
   const buttonElement = formNewCardElement.querySelector(`${selectorList.submitButtonSelector}`);
 
-  sendNewCard(cardData); // Посылаем запрос на сервер на создание новой карточки
+  sendNewCard(popupNewCard, cardData); // Посылаем запрос на сервер на создание новой карточки
   formNewCardElement.reset(); // Опусташаем поля формы
 
   toggleButtonState(selectorList, inputList, buttonElement);

@@ -1,4 +1,4 @@
-import { renderResultProfileInfo, renderResultInitialCards, renderResultAvatar, renderResultNewCard, renderResultLikeCount } from "./index.js";
+import { renderResultProfileInfo, renderResultInitialCards, renderResultAvatar, renderResultNewCard, renderResultLikeCount, renderLoading } from "./index.js";
 
 // Универсальная функция конфигурации запросов
 const config = {
@@ -43,7 +43,9 @@ const getInitialCards = () => {
 };
 
 // Функция редактирования аватара
-const sendAvatar = (avatarLink) => {
+const sendAvatar = (popupAvatar, avatarLink) => {
+  renderLoading(popupAvatar, true);
+
   fetch(`${config.baseURL}/users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
@@ -57,11 +59,16 @@ const sendAvatar = (avatarLink) => {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      renderLoading(popupAvatar, false);
     });
 };
 
 // Функция отправка информации о профиле
-const sendProfileInfo = (nameInput, signatureInput) => {
+const sendProfileInfo = (popupProfile, nameInput, signatureInput) => {
+  renderLoading(popupProfile, true);
+
   fetch(`${config.baseURL}/users/me`, {
     method: "PATCH",
     headers: config.headers,
@@ -76,11 +83,16 @@ const sendProfileInfo = (nameInput, signatureInput) => {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      renderLoading(popupProfile, false);
     });
 };
 
 // Функция отправки новой карточки
-const sendNewCard = (cardData) => {
+const sendNewCard = (popupNewCard, cardData) => {
+  renderLoading(popupNewCard, true);
+
   fetch(`${config.baseURL}/cards`, {
     method: "POST",
     headers: config.headers,
@@ -95,6 +107,9 @@ const sendNewCard = (cardData) => {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      renderLoading(popupNewCard, false);
     });
 };
 

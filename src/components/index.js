@@ -53,6 +53,7 @@ const renderResultInitialCards = (initialCards) => {
   });
 };
 
+// Функция получения аватара
 const renderResultAvatar = (profileInfo) => {
   userAvatar.src = profileInfo.avatar;
 };
@@ -65,6 +66,17 @@ const renderResultNewCard = (cardData) => {
 // Функция обновления лайка
 const renderResultLikeCount = (card, cardData) => {
   card.querySelector(".cards__like-number").textContent = cardData.likes.length;
+};
+
+// Функция уведомления пользователя о процессе загрузки
+const renderLoading = (popup, isLoading) => {
+  const submitBtn = popup.querySelector(".popup__save-button");
+
+  if (isLoading) {
+    submitBtn.textContent = "Сохранение...";
+  } else {
+    submitBtn.textContent = "Сохранить";
+  }
 };
 
 enableValidation(selectorList); // Вызов функции валидации форм
@@ -97,4 +109,13 @@ formAvatarElement.addEventListener("submit", formAvatarSubmitHandler);
 formProfileElement.addEventListener("submit", formProfileSubmitHandler);
 formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
-export { selectorList, currentUserId, renderResultInitialCards, renderResultProfileInfo, renderResultAvatar, renderResultNewCard, renderResultLikeCount };
+export {
+  selectorList,
+  currentUserId,
+  renderResultInitialCards,
+  renderResultProfileInfo,
+  renderResultAvatar,
+  renderResultNewCard,
+  renderResultLikeCount,
+  renderLoading,
+};
