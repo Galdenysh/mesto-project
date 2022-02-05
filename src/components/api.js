@@ -1,5 +1,3 @@
-import { renderResultProfileInfo, renderResultInitialCards, renderResultAvatar, renderResultNewCard, renderResultLikeCount, renderLoading } from "./index.js";
-
 // Универсальная функция конфигурации запросов
 const config = {
   baseURL: "https://nomoreparties.co/v1/plus-cohort-6",
@@ -16,143 +14,75 @@ const getResponseData = (res) => {
 
 // Функция получения информации о профиле с сервера
 const getProfileInfo = () => {
-  fetch(`${config.baseURL}/users/me`, {
+  return fetch(`${config.baseURL}/users/me`, {
     headers: config.headers,
-  })
-    .then((res) => getResponseData(res))
-    .then((profileInfo) => {
-      renderResultProfileInfo(profileInfo);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => getResponseData(res));
 };
 
 // Функция получения карточек с сервера
 const getInitialCards = () => {
-  fetch(`${config.baseURL}/cards`, {
+  return fetch(`${config.baseURL}/cards`, {
     headers: config.headers,
-  })
-    .then((res) => getResponseData(res))
-    .then((initialCards) => {
-      renderResultInitialCards(initialCards);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => getResponseData(res));
 };
 
 // Функция редактирования аватара
-const sendAvatar = (popupAvatar, avatarLink) => {
-  renderLoading(popupAvatar, true);
-
-  fetch(`${config.baseURL}/users/me/avatar`, {
+const sendAvatar = (avatarInput) => {
+  return fetch(`${config.baseURL}/users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
-      avatar: avatarLink.value,
+      avatar: avatarInput.value,
     }),
-  })
-    .then((res) => getResponseData(res))
-    .then((profileInfo) => {
-      renderResultAvatar(profileInfo);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      renderLoading(popupAvatar, false);
-    });
+  }).then((res) => getResponseData(res));
 };
 
 // Функция отправка информации о профиле
-const sendProfileInfo = (popupProfile, nameInput, signatureInput) => {
-  renderLoading(popupProfile, true);
-
-  fetch(`${config.baseURL}/users/me`, {
+const sendProfileInfo = (nameInput, signatureInput) => {
+  return fetch(`${config.baseURL}/users/me`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
       name: nameInput.value,
       about: signatureInput.value,
     }),
-  })
-    .then((res) => getResponseData(res))
-    .then((profileInfo) => {
-      renderResultProfileInfo(profileInfo);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      renderLoading(popupProfile, false);
-    });
+  }).then((res) => getResponseData(res));
 };
 
 // Функция отправки новой карточки
-const sendNewCard = (popupNewCard, cardData) => {
-  renderLoading(popupNewCard, true);
-
-  fetch(`${config.baseURL}/cards`, {
+const sendNewCard = (cardData) => {
+  return fetch(`${config.baseURL}/cards`, {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify({
       name: cardData.name,
       link: cardData.link,
     }),
-  })
-    .then((res) => getResponseData(res))
-    .then((cardData) => {
-      renderResultNewCard(cardData);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      renderLoading(popupNewCard, false);
-    });
+  }).then((res) => getResponseData(res));
 };
 
 // Функция удаления карточки с сервера
 const deleteCard = (cardID) => {
-  fetch(`${config.baseURL}/cards/${cardID}`, {
+  return fetch(`${config.baseURL}/cards/${cardID}`, {
     method: "DELETE",
     headers: config.headers,
-  })
-    .then((res) => getResponseData(res))
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => getResponseData(res));
 };
 
 // Функция отправки лайка на сервер
-const likeCard = (card, cardID) => {
-  fetch(`${config.baseURL}/cards/likes/${cardID}`, {
+const likeCard = (cardID) => {
+  return fetch(`${config.baseURL}/cards/likes/${cardID}`, {
     method: "PUT",
     headers: config.headers,
-  })
-    .then((res) => getResponseData(res))
-    .then((cardData) => {
-      renderResultLikeCount(card, cardData);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => getResponseData(res));
 };
 
 // Функция удаления лайка с сервера
-const deleteLikeCard = (card, cardID) => {
-  fetch(`${config.baseURL}/cards/likes/${cardID}`, {
+const deleteLikeCard = (cardID) => {
+  return fetch(`${config.baseURL}/cards/likes/${cardID}`, {
     method: "DELETE",
     headers: config.headers,
-  })
-    .then((res) => getResponseData(res))
-    .then((cardData) => {
-      renderResultLikeCount(card, cardData);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => getResponseData(res));
 };
 
 export { getProfileInfo, getInitialCards, sendAvatar, sendProfileInfo, sendNewCard, deleteCard, likeCard, deleteLikeCard };

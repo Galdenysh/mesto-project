@@ -1,6 +1,7 @@
 import { toggleButtonState } from "./validate.js";
-import { selectorList } from "./index.js";
+import { selectorsList } from "./constants.js";
 import { sendProfileInfo, sendNewCard, sendAvatar } from "./api.js";
+import { renderResultAvatar, renderResultProfileInfo, renderResultNewCard, renderLoading } from "./index.js";
 
 // Получение информации профиля
 const profile = document.querySelector(".profile");
@@ -12,23 +13,28 @@ const userAvatar = profile.querySelector(".profile__avatar-image");
 const popupAvatar = document.querySelector(".popup_type_avatar"); // Находим попап редактирования аватара
 const formAvatarElement = popupAvatar.querySelector(".popup__form");
 const avatarInput = formAvatarElement.querySelector(".popup__form-item_select_avatar");
+const avatarInputsList = Array.from(formAvatarElement.querySelectorAll(`${selectorsList.inputSelector}`)); // Массив из всех полей формы
+const avatarSubmitBtn = formAvatarElement.querySelector(`${selectorsList.submitButtonSelector}`);
 
-// Находим форму и поля формы пользователя
+// Находим форму пользователя
 const popupProfile = document.querySelector(".popup_type_profile"); // Находим попап пользователя
 const formProfileElement = popupProfile.querySelector(".popup__form");
 const nameInput = formProfileElement.querySelector(".popup__form-item_select_name");
 const signatureInput = formProfileElement.querySelector(".popup__form-item_select_signature");
-
-// Находим попап с просмотром фотографии и его элементы
-const popupImageFullscreen = document.querySelector(".popup_type_image");
-const pictureLink = popupImageFullscreen.querySelector(".popup__big-image");
-const pictureName = popupImageFullscreen.querySelector(".popup__image-caption");
+const profileSubmitBtn = formProfileElement.querySelector(`${selectorsList.submitButtonSelector}`);
 
 // Находим форму добавления места
 const popupNewCard = document.querySelector(".popup_type_new-card"); // Находим попап добавления места
 const formNewCardElement = popupNewCard.querySelector(".popup__form");
 const placeNameInput = formNewCardElement.querySelector(".popup__form-item_select_place-name");
 const pictureUrlInput = formNewCardElement.querySelector(".popup__form-item_select_picture-url");
+const newCardInputsList = Array.from(formNewCardElement.querySelectorAll(`${selectorsList.inputSelector}`)); // Массив из всех полей формы
+const newCardSubmitBtn = formNewCardElement.querySelector(`${selectorsList.submitButtonSelector}`);
+
+// Находим попап с просмотром фотографии и его элементы
+const popupImageFullscreen = document.querySelector(".popup_type_image");
+const pictureLink = popupImageFullscreen.querySelector(".popup__big-image");
+const pictureName = popupImageFullscreen.querySelector(".popup__image-caption");
 
 // Функция открытия попапа
 function openPopup(popup) {
@@ -72,37 +78,66 @@ function closePopupEsc(evt) {
 
 // Обработчик «отправки» формы обновления аватара
 const formAvatarSubmitHandler = () => {
-  const inputList = Array.from(formAvatarElement.querySelectorAll(`${selectorList.inputSelector}`)); // Массив из всех полей формы
-  const buttonElement = formAvatarElement.querySelector(`${selectorList.submitButtonSelector}`);
+  renderLoading(avatarSubmitBtn, true);
 
-  sendAvatar(popupAvatar, avatarInput); // Посылаем запрос на сервер на обновление аватара
-  formAvatarElement.reset(); // Опусташаем поля формы
-
-  toggleButtonState(selectorList, inputList, buttonElement);
+  // Посылаем запрос на сервер на обновление аватара
+  sendAvatar(avatarInput)
+    .then((profileInfo) => {
+      renderResultAvatar(profileInfo);
+      formAvatarElement.reset(); // Опусташаем поля формы
+      toggleButtonState(selectorsList, avatarInputsList, avatarSubmitBtn); // Деактивируем кнопку, если форма не прошла валидацию
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderLoading(avatarSubmitBtn, false);
+    });
 
   closePopup(popupAvatar);
 };
 
 // Обработчик «отправки» формы данных пользователя
-function formProfileSubmitHandler() {
-  sendProfileInfo(popupProfile, nameInput, signatureInput); // Посылаем запрос на сервер на изменение информации профиля
+const formProfileSubmitHandler = () => {
+  renderLoading(profileSubmitBtn, true);
+
+  // Посылаем запрос на сервер на изменение информации профиля
+  sendProfileInfo(nameInput, signatureInput)
+    .then((profileInfo) => {
+      renderResultProfileInfo(profileInfo);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderLoading(profileSubmitBtn, false);
+    });
 
   closePopup(popupProfile);
-}
+};
 
 // Обработчик «отправки» формы добавления места
-function formNewCardSubmitHandler() {
+const formNewCardSubmitHandler = () => {
   const cardData = { name: placeNameInput.value, link: pictureUrlInput.value }; // Записываем в целевой объект значение из полей форм
-  const inputList = Array.from(formNewCardElement.querySelectorAll(`${selectorList.inputSelector}`)); // Массив из всех полей формы
-  const buttonElement = formNewCardElement.querySelector(`${selectorList.submitButtonSelector}`);
 
-  sendNewCard(popupNewCard, cardData); // Посылаем запрос на сервер на создание новой карточки
-  formNewCardElement.reset(); // Опусташаем поля формы
+  renderLoading(newCardSubmitBtn, true);
 
-  toggleButtonState(selectorList, inputList, buttonElement);
+  // Посылаем запрос на сервер на создание новой карточки
+  sendNewCard(cardData)
+    .then((cardData) => {
+      renderResultNewCard(cardData);
+      formNewCardElement.reset(); // Опусташаем поля формы
+      toggleButtonState(selectorsList, newCardInputsList, newCardSubmitBtn); // Деактивируем кнопку, если форма не прошла валидацию
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderLoading(newCardSubmitBtn, false);
+    });
 
   closePopup(popupNewCard);
-}
+};
 
 export {
   openPopup,

@@ -1,5 +1,5 @@
 import { openPopupImage } from "./modal.js";
-import { currentUserId } from "./index.js";
+import { currentUserId, renderResultLikeCount } from "./index.js";
 import { deleteCard, likeCard, deleteLikeCard } from "./api.js";
 
 const cards = document.querySelector(".cards"); // Находим секцию с карточками
@@ -53,19 +53,33 @@ function toggleLike(evt, cardData) {
   const card = evt.target.closest(".cards__card");
 
   if (evt.target.classList.contains("cards__like-button_active")) {
-    deleteLikeCard(card, cardData._id);
+    deleteLikeCard(cardData._id)
+      .then((cardData) => {
+        renderResultLikeCount(card, cardData);
+        evt.target.classList.toggle("cards__like-button_active");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   } else {
-    likeCard(card, cardData._id);
+    likeCard(cardData._id)
+      .then((cardData) => {
+        renderResultLikeCount(card, cardData);
+        evt.target.classList.toggle("cards__like-button_active");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-
-  evt.target.classList.toggle("cards__like-button_active");
 }
 
 // Функция удаления карточки
 function removeCard(cardElement, cardData) {
-  cardElement.remove();
-
-  deleteCard(cardData._id);
+  deleteCard(cardData._id)
+    .then(cardElement.remove())
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 // Функция прослушивания взаимодействия с карточками

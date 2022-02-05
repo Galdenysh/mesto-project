@@ -1,5 +1,6 @@
 import "../pages/index.css";
 
+import { selectorsList } from "./constants";
 import { enableValidation } from "./validate.js";
 import { addStartCard, addCard } from "./card.js";
 import {
@@ -21,14 +22,6 @@ import {
 } from "./modal.js";
 import { getProfileInfo, getInitialCards } from "./api.js";
 
-const selectorList = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__form-item",
-  submitButtonSelector: ".popup__save-button",
-  inactiveButtonClass: "popup__save-button_inactive",
-  inputErrorClass: "popup__form-item_type_error",
-  errorClass: "popup__form-item-error_active",
-};
 const popups = document.querySelectorAll(".popup");
 
 // Находим кнопки
@@ -37,6 +30,16 @@ const openPopupProfileBtn = profile.querySelector(".profile__edit-button");
 const openPopupNewCardBtn = profile.querySelector(".profile__add-button");
 
 let currentUserId = {};
+
+// Получения начальных данных с сервера
+Promise.all([getProfileInfo(), getInitialCards()])
+  .then(([profileInfo, initialCards]) => {
+    renderResultProfileInfo(profileInfo);
+    renderResultInitialCards(initialCards);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Функция получения информации о профиле с сервера
 const renderResultProfileInfo = (profileInfo) => {
@@ -69,9 +72,7 @@ const renderResultLikeCount = (card, cardData) => {
 };
 
 // Функция уведомления пользователя о процессе загрузки
-const renderLoading = (popup, isLoading) => {
-  const submitBtn = popup.querySelector(".popup__save-button");
-
+const renderLoading = (submitBtn, isLoading) => {
   if (isLoading) {
     submitBtn.textContent = "Сохранение...";
   } else {
@@ -79,11 +80,7 @@ const renderLoading = (popup, isLoading) => {
   }
 };
 
-enableValidation(selectorList); // Вызов функции валидации форм
-
-// Вызов функций получения запросов с сервера
-getProfileInfo();
-getInitialCards();
+enableValidation(selectorsList); // Вызов функции валидации форм
 
 // Функция навешивания слушателей на все попапы
 popups.forEach((popup) => {
@@ -109,13 +106,4 @@ formAvatarElement.addEventListener("submit", formAvatarSubmitHandler);
 formProfileElement.addEventListener("submit", formProfileSubmitHandler);
 formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
-export {
-  selectorList,
-  currentUserId,
-  renderResultInitialCards,
-  renderResultProfileInfo,
-  renderResultAvatar,
-  renderResultNewCard,
-  renderResultLikeCount,
-  renderLoading,
-};
+export { currentUserId, renderResultInitialCards, renderResultProfileInfo, renderResultAvatar, renderResultNewCard, renderResultLikeCount, renderLoading };
