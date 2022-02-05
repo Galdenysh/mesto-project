@@ -86,6 +86,7 @@ const formAvatarSubmitHandler = () => {
       renderResultAvatar(profileInfo);
       formAvatarElement.reset(); // Опусташаем поля формы
       toggleButtonState(selectorsList, avatarInputsList, avatarSubmitBtn); // Деактивируем кнопку, если форма не прошла валидацию
+      closePopup(popupAvatar);
     })
     .catch((err) => {
       console.log(err);
@@ -93,8 +94,6 @@ const formAvatarSubmitHandler = () => {
     .finally(() => {
       renderLoading(avatarSubmitBtn, false);
     });
-
-  closePopup(popupAvatar);
 };
 
 // Обработчик «отправки» формы данных пользователя
@@ -105,6 +104,7 @@ const formProfileSubmitHandler = () => {
   sendProfileInfo(nameInput, signatureInput)
     .then((profileInfo) => {
       renderResultProfileInfo(profileInfo);
+      closePopup(popupProfile);
     })
     .catch((err) => {
       console.log(err);
@@ -112,8 +112,6 @@ const formProfileSubmitHandler = () => {
     .finally(() => {
       renderLoading(profileSubmitBtn, false);
     });
-
-  closePopup(popupProfile);
 };
 
 // Обработчик «отправки» формы добавления места
@@ -128,6 +126,7 @@ const formNewCardSubmitHandler = () => {
       renderResultNewCard(cardData);
       formNewCardElement.reset(); // Опусташаем поля формы
       toggleButtonState(selectorsList, newCardInputsList, newCardSubmitBtn); // Деактивируем кнопку, если форма не прошла валидацию
+      closePopup(popupNewCard);
     })
     .catch((err) => {
       console.log(err);
@@ -135,8 +134,6 @@ const formNewCardSubmitHandler = () => {
     .finally(() => {
       renderLoading(newCardSubmitBtn, false);
     });
-
-  closePopup(popupNewCard);
 };
 
 export {

@@ -76,7 +76,7 @@ function toggleLike(evt, cardData) {
 // Функция удаления карточки
 function removeCard(cardElement, cardData) {
   deleteCard(cardData._id)
-    .then(cardElement.remove())
+    .then(() => cardElement.remove())
     .catch((err) => {
       console.log(err);
     });
