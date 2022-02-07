@@ -2,6 +2,7 @@ import { toggleButtonState } from "./validate.js";
 import { selectorsList } from "./constants.js";
 import { sendProfileInfo, sendNewCard, sendAvatar } from "./api.js";
 import { renderResultAvatar, renderResultProfileInfo, renderResultNewCard, renderLoading } from "./index.js";
+import { removeCard } from "./card.js";
 
 // Получение информации профиля
 const profile = document.querySelector(".profile");
@@ -36,6 +37,10 @@ const popupImageFullscreen = document.querySelector(".popup_type_image");
 const pictureLink = popupImageFullscreen.querySelector(".popup__big-image");
 const pictureName = popupImageFullscreen.querySelector(".popup__image-caption");
 
+// Находим попап подтверждения
+const popupConfirm = document.querySelector(".popup_type_confirm");
+const confirmBtn = popupConfirm.querySelector(".popup__save-button");
+
 // Функция открытия попапа
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -66,6 +71,13 @@ function openPopupImage(cardData) {
 
   openPopup(popupImageFullscreen);
 }
+
+// Функция открытия попапа подтверждения
+const openPopupConfirm = (cardElement, cardData) => {
+  openPopup(popupConfirm);
+
+  confirmBtn.addEventListener("click", () => removeCard(cardElement, cardData));
+};
 
 // Функция закрытия попапа по нажатию клавиши Esc
 function closePopupEsc(evt) {
@@ -140,6 +152,7 @@ export {
   openPopup,
   openPopupProfile,
   openPopupImage,
+  openPopupConfirm,
   closePopup,
   formAvatarSubmitHandler,
   formProfileSubmitHandler,
@@ -150,6 +163,8 @@ export {
   userAvatar,
   popupAvatar,
   popupNewCard,
+  popupConfirm,
+  confirmBtn,
   formAvatarElement,
   formProfileElement,
   formNewCardElement,

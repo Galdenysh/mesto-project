@@ -1,4 +1,4 @@
-import { openPopupImage } from "./modal.js";
+import { openPopupImage, openPopupConfirm, closePopup, popupConfirm, confirmBtn } from "./modal.js";
 import { currentUserId, renderResultLikeCount } from "./index.js";
 import { deleteCard, likeCard, deleteLikeCard } from "./api.js";
 
@@ -75,18 +75,24 @@ function toggleLike(evt, cardData) {
 
 // Функция удаления карточки
 function removeCard(cardElement, cardData) {
+  confirmBtn.textContent = "Удаление...";
+
   deleteCard(cardData._id)
-    .then(() => cardElement.remove())
+    .then(() => {
+      cardElement.remove();
+      closePopup(popupConfirm);
+    })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => (confirmBtn.textContent = "Да"));
 }
 
 // Функция прослушивания взаимодействия с карточками
 function setEventListeners(cardElement, cardData) {
   cardElement.querySelector(".cards__like-button").addEventListener("click", (evt) => toggleLike(evt, cardData));
   cardElement.querySelector(".cards__place").addEventListener("click", () => openPopupImage(cardData));
-  cardElement.querySelector(".cards__remove-button").addEventListener("click", () => removeCard(cardElement, cardData));
+  cardElement.querySelector(".cards__remove-button").addEventListener("click", () => openPopupConfirm(cardElement, cardData));
 }
 
-export { addStartCard, addCard };
+export { addStartCard, addCard, removeCard };
