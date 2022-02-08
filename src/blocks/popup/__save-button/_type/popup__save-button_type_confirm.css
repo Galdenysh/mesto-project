@@ -1,0 +1,9 @@
+.popup__save-button_type_confirm {
+  margin-top: 38px;
+}
+
+@media screen and (max-width: 619px) {
+  .popup__save-button_type_confirm {
+    margin-top: 35px;
+  }
+}

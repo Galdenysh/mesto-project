@@ -41,6 +41,8 @@ const pictureName = popupImageFullscreen.querySelector(".popup__image-caption");
 const popupConfirm = document.querySelector(".popup_type_confirm");
 const confirmBtn = popupConfirm.querySelector(".popup__save-button");
 
+const removebleCardData = {}; // Объект с данными удаляемой карточки
+
 // Функция открытия попапа
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -53,6 +55,7 @@ function closePopup(popup) {
   popup.classList.remove("popup_opened");
 
   document.removeEventListener("keydown", closePopupEsc);
+  confirmBtn.removeEventListener("click", confirmHandler);
 }
 
 // Функция открытия попапа пользователя и заполнения полей формы из информации профиля
@@ -76,7 +79,10 @@ function openPopupImage(cardData) {
 const openPopupConfirm = (cardElement, cardData) => {
   openPopup(popupConfirm);
 
-  confirmBtn.addEventListener("click", () => removeCard(cardElement, cardData));
+  removebleCardData.cardElement = cardElement;
+  removebleCardData.cardData = cardData;
+
+  confirmBtn.addEventListener("click", confirmHandler);
 };
 
 // Функция закрытия попапа по нажатию клавиши Esc
@@ -146,6 +152,11 @@ const formNewCardSubmitHandler = () => {
     .finally(() => {
       renderLoading(newCardSubmitBtn, false);
     });
+};
+
+// Обработчик подтверждения удаления карточки
+const confirmHandler = () => {
+  removeCard(removebleCardData.cardElement, removebleCardData.cardData);
 };
 
 export {
