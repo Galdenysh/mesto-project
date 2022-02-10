@@ -86,3 +86,5 @@ const deleteLikeCard = (cardID) => {
 };
 
 export { getProfileInfo, getInitialCards, sendAvatar, sendProfileInfo, sendNewCard, deleteCard, likeCard, deleteLikeCard };
+
+//test
