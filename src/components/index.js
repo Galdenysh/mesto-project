@@ -21,7 +21,24 @@ import {
   formNewCardElement,
 } from "./modal.js";
 import { getProfileInfo, getInitialCards } from "./api.js";
+import { UserInfo } from "./UserInfo";
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const api = new Api({
+  baseURL: "https://nomoreparties.co/v1/plus-cohort-6",
+  headers: {
+    authorization: "8aaf6757-8c7f-4d9e-9e64-5effc217e908",
+    "Content-Type": "application/json",
+  },
+});
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const popups = document.querySelectorAll(".popup");
 
 // Находим кнопки

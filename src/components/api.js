@@ -7,14 +7,8 @@
   },
 };*/
 
-// Этот экземпляр класса необходимо перенести в index.js
-const api = new Api({
-  baseURL: "https://nomoreparties.co/v1/plus-cohort-6",
-  headers: {
-    authorization: "8aaf6757-8c7f-4d9e-9e64-5effc217e908",
-    "Content-Type": "application/json",
-  },
-});
+
+
 
 export default class Api {
   constructor(options) {
