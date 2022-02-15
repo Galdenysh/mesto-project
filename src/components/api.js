@@ -10,7 +10,7 @@
 
 
 
-export default class Api {
+export class Api {
   constructor(options) {
     this._url = options.baseURL;
     this._headers = options.headers;
