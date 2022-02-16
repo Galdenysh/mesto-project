@@ -2,7 +2,7 @@ import "../pages/index.css";
 
 import { selectorsList } from "./constants";
 import { enableValidation } from "./validate.js";
-import { addStartCard, addCard } from "./card.js";
+// import { addStartCard, addCard } from "./card.js";
 import {
   openPopup,
   openPopupProfile,
@@ -20,7 +20,9 @@ import {
   formProfileElement,
   formNewCardElement,
 } from "./modal.js";
-import { getProfileInfo, getInitialCards } from "./api.js";
+// import { getProfileInfo, getInitialCards } from "./api.js";
+import Api from "./Api.js";
+import Card from "./Card.js";
 import { UserInfo } from "./UserInfo";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,14 +34,35 @@ const api = new Api({
   },
 });
 
+// const card = new Card();
 
-
-
-
-
+const renderer = (evt, cardId) => {
+  if (evt.target.classList.contains("cards__like-button_active")) {
+    api
+      .deleteLikeCard(cardId)
+      .then((cardData) => {
+        // renderResultLikeCount(card, cardData);
+        evt.target.classList.toggle("cards__like-button_active");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    api
+      .likeCard(cardId)
+      .then((cardData) => {
+        // renderResultLikeCount(card, cardData);
+        evt.target.classList.toggle("cards__like-button_active");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const popups = document.querySelectorAll(".popup");
+const cards = document.querySelector(".cards"); // Находим секцию с карточками
 
 // Находим кнопки
 const openPopupAvatarBtn = profile.querySelector(".profile__avatar-button");
@@ -49,7 +72,7 @@ const openPopupNewCardBtn = profile.querySelector(".profile__add-button");
 let currentUserId = {};
 
 // Получения начальных данных с сервера
-Promise.all([getProfileInfo(), getInitialCards()])
+Promise.all([api.getProfileInfo(), api.getInitialCards()])
   .then(([profileInfo, initialCards]) => {
     renderResultProfileInfo(profileInfo);
     renderResultInitialCards(initialCards);
@@ -69,7 +92,8 @@ const renderResultProfileInfo = (profileInfo) => {
 // Функция получения начальных карточек
 const renderResultInitialCards = (initialCards) => {
   initialCards.forEach(function (cardData) {
-    addStartCard(cardData);
+    const card = new Card(cardData, renderer, "#js-cards");
+    card.addStartCard(cards);
   });
 };
 
