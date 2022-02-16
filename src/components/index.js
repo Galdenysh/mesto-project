@@ -1,7 +1,7 @@
 import "../pages/index.css";
 
 import { selectorsList } from "./constants";
-import { enableValidation } from "./validate.js";
+// import { enableValidation } from "./validate.js";
 // import { addStartCard, addCard } from "./card.js";
 import {
   openPopup,

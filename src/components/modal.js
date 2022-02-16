@@ -1,4 +1,4 @@
-import { toggleButtonState } from "./validate.js";
+// import { toggleButtonState } from "./validate.js";
 import { selectorsList } from "./constants.js";
 // import { sendProfileInfo, sendNewCard, sendAvatar } from "./api.js";
 import { renderResultAvatar, renderResultProfileInfo, renderResultNewCard, renderLoading } from "./index.js";
