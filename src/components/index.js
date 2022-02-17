@@ -26,7 +26,6 @@ import Card from "./Card.js";
 import Section from "./Section.js";
 import { UserInfo } from "./UserInfo";
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const api = new Api({
   baseURL: "https://nomoreparties.co/v1/plus-cohort-6",
   headers: {
@@ -35,48 +34,19 @@ const api = new Api({
   },
 });
 
-const renderer = (evt, cardId) => {
-  if (evt.target.classList.contains("cards__like-button_active")) {
-    api
-      .deleteLikeCard(cardId)
-      .then((cardData) => {
-        // renderResultLikeCount(card, cardData);
-        evt.target.classList.toggle("cards__like-button_active");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  } else {
-    api
-      .likeCard(cardId)
-      .then((cardData) => {
-        // renderResultLikeCount(card, cardData);
-        evt.target.classList.toggle("cards__like-button_active");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-};
-
-const cardListSection = ".cards";
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const cardListSection = ".cards"; // Селектор секции с карточками
 const popups = document.querySelectorAll(".popup");
-const cards = document.querySelector(".cards"); // Находим секцию с карточками
 
 // Находим кнопки
 const openPopupAvatarBtn = profile.querySelector(".profile__avatar-button");
 const openPopupProfileBtn = profile.querySelector(".profile__edit-button");
 const openPopupNewCardBtn = profile.querySelector(".profile__add-button");
 
-let currentUserId = {};
-
 // Получения начальных данных с сервера
 Promise.all([api.getProfileInfo(), api.getInitialCards()])
   .then(([profileInfo, initialCards]) => {
-    renderResultProfileInfo(profileInfo);
-    renderResultInitialCards(initialCards);
+    const currentUserId = renderResultProfileInfo(profileInfo);
+    renderResultInitialCards(initialCards, currentUserId);
   })
   .catch((err) => {
     console.log(err);
@@ -87,17 +57,18 @@ const renderResultProfileInfo = (profileInfo) => {
   userName.textContent = profileInfo.name;
   userSignature.textContent = profileInfo.about;
   userAvatar.src = profileInfo.avatar;
-  currentUserId = profileInfo._id;
+
+  return profileInfo._id;
 };
 
 // Функция получения начальных карточек
-const renderResultInitialCards = (initialCards) => {
+const renderResultInitialCards = (initialCards, currentUserId) => {
   const cardList = new Section(
     {
       data: initialCards,
       renderer: (item) => {
         const card = new Card(item, "#js-cards");
-        const cardElement = card.createCard();
+        const cardElement = card.createCard(currentUserId);
 
         cardList.setItem(cardElement);
       },
@@ -158,4 +129,4 @@ formAvatarElement.addEventListener("submit", formAvatarSubmitHandler);
 formProfileElement.addEventListener("submit", formProfileSubmitHandler);
 formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
-export { currentUserId, renderResultInitialCards, renderResultProfileInfo, renderResultAvatar, renderResultNewCard, renderResultLikeCount, renderLoading };
+export { api, renderResultInitialCards, renderResultProfileInfo, renderResultAvatar, renderResultNewCard, renderResultLikeCount, renderLoading };

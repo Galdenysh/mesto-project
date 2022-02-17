@@ -1,5 +1,5 @@
 import { openPopupImage, openPopupConfirm, closePopup, popupConfirm, confirmBtn } from "./modal.js";
-import { currentUserId, renderResultLikeCount } from "./index.js";
+// import { currentUserId, renderResultLikeCount } from "./index.js";
 import { deleteCard, likeCard, deleteLikeCard } from "./Api.js";
 
 const cards = document.querySelector(".cards"); // Находим секцию с карточками
