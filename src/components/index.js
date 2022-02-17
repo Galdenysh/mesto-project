@@ -95,6 +95,12 @@ const renderResultInitialCards = (initialCards) => {
   const cardList = new Section(
     {
       data: initialCards,
+      renderer: (item) => {
+        const card = new Card(item, "#js-cards");
+        const cardElement = card.createCard();
+
+        cardList.setItem(cardElement);
+      },
     },
     cardListSection
   );

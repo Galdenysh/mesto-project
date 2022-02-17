@@ -4,7 +4,6 @@ export default class Card {
     this._link = cardData.link;
     this._likes = cardData.likes;
     this._id = cardData._id;
-    // this._renderer = renderer;
     this._selector = selector;
   }
 
