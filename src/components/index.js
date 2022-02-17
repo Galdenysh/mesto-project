@@ -23,6 +23,7 @@ import {
 // import { getProfileInfo, getInitialCards } from "./api.js";
 import Api from "./Api.js";
 import Card from "./Card.js";
+import Section from "./Section.js";
 import { UserInfo } from "./UserInfo";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,8 +34,6 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-
-// const card = new Card();
 
 const renderer = (evt, cardId) => {
   if (evt.target.classList.contains("cards__like-button_active")) {
@@ -59,6 +58,8 @@ const renderer = (evt, cardId) => {
       });
   }
 };
+
+const cardListSection = ".cards";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const popups = document.querySelectorAll(".popup");
@@ -91,10 +92,14 @@ const renderResultProfileInfo = (profileInfo) => {
 
 // Функция получения начальных карточек
 const renderResultInitialCards = (initialCards) => {
-  initialCards.forEach(function (cardData) {
-    const card = new Card(cardData, renderer, "#js-cards");
-    card.addStartCard(cards);
-  });
+  const cardList = new Section(
+    {
+      data: initialCards,
+    },
+    cardListSection
+  );
+
+  cardList.renderItems();
 };
 
 // Функция получения аватара
@@ -121,7 +126,7 @@ const renderLoading = (submitBtn, isLoading) => {
   }
 };
 
-enableValidation(selectorsList); // Вызов функции валидации форм
+// enableValidation(selectorsList); // Вызов функции валидации форм
 
 // Функция навешивания слушателей на все попапы
 popups.forEach((popup) => {

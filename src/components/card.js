@@ -1,10 +1,10 @@
 export default class Card {
-  constructor(cardData, renderer, selector) {
+  constructor(cardData, selector) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._likes = cardData.likes;
     this._id = cardData._id;
-    this._renderer = renderer;
+    // this._renderer = renderer;
     this._selector = selector;
   }
 
@@ -27,7 +27,7 @@ export default class Card {
   }
 
   // Функция создания карточки
-  _createCard() {
+  createCard() {
     this._cardElement = this._getElement();
 
     const cardPlace = this._cardElement.querySelector(".cards__place");
