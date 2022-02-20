@@ -1,11 +1,12 @@
 export default class Card {
-  constructor(cardData, handleToggleLike, selector) {
+  constructor(cardData, handleToggleLike, handleCardClick, selector) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._likes = cardData.likes;
     this._id = cardData._id;
     this._ownerId = cardData.owner._id;
     this._handleToggleLike = handleToggleLike;
+    this._handleCardClick = handleCardClick;
     this._selector = selector;
   }
 
@@ -64,7 +65,7 @@ export default class Card {
 
   _setEventListeners() {
     this._cardElement.querySelector(".cards__like-button").addEventListener("click", (evt) => this._handleToggleLike(evt, this._id));
-    // this._cardElement.querySelector(".cards__place").addEventListener("click", () => openPopupImage(cardData));
+    this._cardElement.querySelector(".cards__place").addEventListener("click", () => this._handleCardClick({ link: this._link, name: this._name }));
     // cardElement.querySelector(".cards__remove-button").addEventListener("click", () => openPopupConfirm(cardElement, cardData));
   }
 }

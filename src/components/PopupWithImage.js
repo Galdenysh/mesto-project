@@ -1,10 +1,18 @@
-export default class PopupWithImage {}
+import Popup from "./Popup.js";
 
-// Функция открытия попапа с просмотром фотографии
-function openPopupImage(cardData) {
-  pictureLink.src = cardData.link;
-  pictureLink.alt = cardData.name;
-  pictureName.textContent = cardData.name;
+export default class PopupWithImage extends Popup {
+  constructor(selector) {
+    super(selector);
+  }
 
-  openPopup(popupImageFullscreen);
+  open({ link, name }) {
+    const pictureLink = this._popup.querySelector(".popup__big-image");
+    const pictureName = this._popup.querySelector(".popup__image-caption");
+
+    pictureLink.src = link;
+    pictureLink.alt = name;
+    pictureName.textContent = name;
+
+    super.open();
+  }
 }

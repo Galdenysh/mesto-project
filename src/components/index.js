@@ -24,6 +24,7 @@ import {
 import Api from "./Api.js";
 import Card from "./Card.js";
 import Section from "./Section.js";
+import PopupWithImage from "./PopupWithImage.js";
 import { UserInfo } from "./UserInfo";
 
 const api = new Api({
@@ -67,7 +68,7 @@ const renderResultInitialCards = (initialCards, currentUserId) => {
     {
       data: initialCards,
       renderer: (item) => {
-        const card = new Card(item, handleToggleLike, "#js-cards");
+        const card = new Card(item, handleToggleLike, handleCardClick, "#js-cards");
         const cardElement = card.createCard(currentUserId);
 
         cardList.setItem(cardElement);
@@ -104,6 +105,14 @@ const handleToggleLike = (evt, cardId) => {
         console.log(err);
       });
   }
+};
+
+// Функция открытия попапа с просмотром фотографии
+const handleCardClick = ({ link, name }) => {
+  const popupWithImage = new PopupWithImage(".popup_type_image");
+
+  popupWithImage.open({ link, name });
+  popupWithImage.setEventListeners();
 };
 
 // Функция получения аватара

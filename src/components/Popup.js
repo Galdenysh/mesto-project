@@ -1,7 +1,7 @@
 export default class Popup {
   constructor(selector) {
     this._popup = document.querySelector(selector);
-    this._openPopupBtn = document.querySelector(".profile__avatar-button");
+    this._handleEscClose = this._handleEscClose.bind(this); // Явная приявязка к class Popup, чтобы не потерять контекст
   }
 
   open() {
