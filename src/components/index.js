@@ -79,6 +79,7 @@ const renderResultInitialCards = (initialCards, currentUserId) => {
   cardList.renderItems();
 };
 
+// Функция переключения лайка
 const handleToggleLike = (evt, cardId) => {
   const card = evt.target.closest(".cards__card");
 
@@ -131,19 +132,19 @@ const renderLoading = (submitBtn, isLoading) => {
 
 // enableValidation(selectorsList); // Вызов функции валидации форм
 
-// Функция навешивания слушателей на все попапы
-popups.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    // Если был клик по открытому оверлею, то закроем попап
-    if (evt.target.classList.contains("popup_opened")) {
-      closePopup(popup);
-    }
-    // Если нажата кнопка закрытия, то закроем попап
-    if (evt.target.classList.contains("popup__close-button")) {
-      closePopup(popup);
-    }
-  });
-});
+// // Функция навешивания слушателей на все попапы
+// popups.forEach((popup) => {
+//   popup.addEventListener("mousedown", (evt) => {
+//     // Если был клик по открытому оверлею, то закроем попап
+//     if (evt.target.classList.contains("popup_opened")) {
+//       closePopup(popup);
+//     }
+//     // Если нажата кнопка закрытия, то закроем попап
+//     if (evt.target.classList.contains("popup__close-button")) {
+//       closePopup(popup);
+//     }
+//   });
+// });
 
 // Слушаем кнопки
 openPopupAvatarBtn.addEventListener("click", () => openPopup(popupAvatar));
