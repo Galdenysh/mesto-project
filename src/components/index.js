@@ -67,7 +67,7 @@ const renderResultInitialCards = (initialCards, currentUserId) => {
     {
       data: initialCards,
       renderer: (item) => {
-        const card = new Card(item, "#js-cards");
+        const card = new Card(item, handleToggleLike, "#js-cards");
         const cardElement = card.createCard(currentUserId);
 
         cardList.setItem(cardElement);
@@ -77,6 +77,32 @@ const renderResultInitialCards = (initialCards, currentUserId) => {
   );
 
   cardList.renderItems();
+};
+
+const handleToggleLike = (evt, cardId) => {
+  const card = evt.target.closest(".cards__card");
+
+  if (evt.target.classList.contains("cards__like-button_active")) {
+    api
+      .deleteLikeCard(cardId)
+      .then((cardData) => {
+        renderResultLikeCount(card, cardData);
+        evt.target.classList.toggle("cards__like-button_active");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    api
+      .likeCard(cardId)
+      .then((cardData) => {
+        renderResultLikeCount(card, cardData);
+        evt.target.classList.toggle("cards__like-button_active");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
 
 // Функция получения аватара

@@ -1,12 +1,11 @@
-import { api } from "./index.js";
-
 export default class Card {
-  constructor(cardData, selector) {
+  constructor(cardData, handleToggleLike, selector) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._likes = cardData.likes;
     this._id = cardData._id;
     this._ownerId = cardData.owner._id;
+    this._handleToggleLike = handleToggleLike;
     this._selector = selector;
   }
 
@@ -48,33 +47,6 @@ export default class Card {
     return this._cardElement;
   }
 
-  // Функция переключения лайка
-  _toggleLike(evt) {
-    const card = evt.target.closest(".cards__card");
-
-    if (evt.target.classList.contains("cards__like-button_active")) {
-      api
-        .deleteLikeCard(this._id)
-        .then((cardData) => {
-          card.querySelector(".cards__like-number").textContent = cardData.likes.length;
-          evt.target.classList.toggle("cards__like-button_active");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      api
-        .likeCard(this._id)
-        .then((cardData) => {
-          card.querySelector(".cards__like-number").textContent = cardData.likes.length;
-          evt.target.classList.toggle("cards__like-button_active");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }
-
   // // Функция удаления карточки
   // _removeCard(cardElement, cardData) {
   //   confirmBtn.textContent = "Удаление...";
@@ -91,7 +63,7 @@ export default class Card {
   // }
 
   _setEventListeners() {
-    this._cardElement.querySelector(".cards__like-button").addEventListener("click", (evt) => this._toggleLike(evt));
+    this._cardElement.querySelector(".cards__like-button").addEventListener("click", (evt) => this._handleToggleLike(evt, this._id));
     // this._cardElement.querySelector(".cards__place").addEventListener("click", () => openPopupImage(cardData));
     // cardElement.querySelector(".cards__remove-button").addEventListener("click", () => openPopupConfirm(cardElement, cardData));
   }
