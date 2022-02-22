@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(cardData, handleToggleLike, handleCardClick, selector) {
+  constructor(cardData, handleToggleLike, handleCardClick, handleRemoveCard, selector) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._likes = cardData.likes;
@@ -7,6 +7,7 @@ export default class Card {
     this._ownerId = cardData.owner._id;
     this._handleToggleLike = handleToggleLike;
     this._handleCardClick = handleCardClick;
+    this._handleRemoveCard = handleRemoveCard;
     this._selector = selector;
   }
 
@@ -48,24 +49,11 @@ export default class Card {
     return this._cardElement;
   }
 
-  // // Функция удаления карточки
-  // _removeCard(cardElement, cardData) {
-  //   confirmBtn.textContent = "Удаление...";
-
-  //   deleteCard(cardData._id)
-  //     .then(() => {
-  //       cardElement.remove();
-  //       closePopup(popupConfirm);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  //     .finally(() => (confirmBtn.textContent = "Да"));
-  // }
-
   _setEventListeners() {
     this._cardElement.querySelector(".cards__like-button").addEventListener("click", (evt) => this._handleToggleLike(evt, this._id));
     this._cardElement.querySelector(".cards__place").addEventListener("click", () => this._handleCardClick({ link: this._link, name: this._name }));
-    // cardElement.querySelector(".cards__remove-button").addEventListener("click", () => openPopupConfirm(cardElement, cardData));
+    this._cardElement
+      .querySelector(".cards__remove-button")
+      .addEventListener("click", () => this._handleRemoveCard({ cardElement: this._cardElement, cardId: this._id }));
   }
 }

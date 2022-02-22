@@ -8,6 +8,7 @@ const cards = document.querySelector(".cards"); // Находим секцию �
 function createCard(cardData) {
   const cardTemplate = document.querySelector("#js-cards").content;
   const cardElement = cardTemplate.querySelector(".cards__card").cloneNode(true);
+
   const cardPlace = cardElement.querySelector(".cards__place");
   const cardTitle = cardElement.querySelector(".cards__title");
   const cardLikesCount = cardElement.querySelector(".cards__like-number");

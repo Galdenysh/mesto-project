@@ -25,6 +25,7 @@ import Api from "./Api.js";
 import Card from "./Card.js";
 import Section from "./Section.js";
 import PopupWithImage from "./PopupWithImage.js";
+import PopupConfirm from "./PopupConfirm.js";
 import { UserInfo } from "./UserInfo";
 
 const api = new Api({
@@ -68,7 +69,7 @@ const renderResultInitialCards = (initialCards, currentUserId) => {
     {
       data: initialCards,
       renderer: (item) => {
-        const card = new Card(item, handleToggleLike, handleCardClick, "#js-cards");
+        const card = new Card(item, handleToggleLike, handleCardClick, handleRemoveCard, "#js-cards");
         const cardElement = card.createCard(currentUserId);
 
         cardList.setItem(cardElement);
@@ -83,12 +84,13 @@ const renderResultInitialCards = (initialCards, currentUserId) => {
 // Функция переключения лайка
 const handleToggleLike = (evt, cardId) => {
   const card = evt.target.closest(".cards__card");
+  const likeCount = card.querySelector(".cards__like-number");
 
   if (evt.target.classList.contains("cards__like-button_active")) {
     api
       .deleteLikeCard(cardId)
       .then((cardData) => {
-        renderResultLikeCount(card, cardData);
+        likeCount.textContent = cardData.likes.length;
         evt.target.classList.toggle("cards__like-button_active");
       })
       .catch((err) => {
@@ -98,7 +100,7 @@ const handleToggleLike = (evt, cardId) => {
     api
       .likeCard(cardId)
       .then((cardData) => {
-        renderResultLikeCount(card, cardData);
+        likeCount.textContent = cardData.likes.length;
         evt.target.classList.toggle("cards__like-button_active");
       })
       .catch((err) => {
@@ -115,6 +117,32 @@ const handleCardClick = ({ link, name }) => {
   popupWithImage.setEventListeners();
 };
 
+// Создаем попап подтверждения удаления
+const popupConfirm = new PopupConfirm(
+  {
+    handleConfirm: ({ cardElement, cardId }, confirmBtn) => {
+      confirmBtn.textContent = "Удаление...";
+      api
+        .deleteCard(cardId)
+        .then(() => {
+          cardElement.remove();
+          popupConfirm.close();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => (confirmBtn.textContent = "Да"));
+    },
+  },
+  ".popup_type_confirm"
+);
+
+// Функция удаления карточки
+const handleRemoveCard = ({ cardElement, cardId }) => {
+  popupConfirm.open({ cardElement, cardId });
+  popupConfirm.setEventListeners();
+};
+
 // Функция получения аватара
 const renderResultAvatar = (profileInfo) => {
   userAvatar.src = profileInfo.avatar;
@@ -123,11 +151,6 @@ const renderResultAvatar = (profileInfo) => {
 // Функция получения новой карточки
 const renderResultNewCard = (cardData) => {
   addCard(cardData);
-};
-
-// Функция обновления лайка
-const renderResultLikeCount = (card, cardData) => {
-  card.querySelector(".cards__like-number").textContent = cardData.likes.length;
 };
 
 // Функция уведомления пользователя о процессе загрузки
@@ -165,4 +188,4 @@ formAvatarElement.addEventListener("submit", formAvatarSubmitHandler);
 formProfileElement.addEventListener("submit", formProfileSubmitHandler);
 formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
-export { api, renderResultInitialCards, renderResultProfileInfo, renderResultAvatar, renderResultNewCard, renderResultLikeCount, renderLoading };
+export { api, renderResultInitialCards, renderResultProfileInfo, renderResultAvatar, renderResultNewCard, renderLoading };
