@@ -4,13 +4,14 @@ export default class PopupConfirm extends Popup {
   constructor({ handleConfirm }, selector) {
     super(selector);
     this._handleConfirm = handleConfirm;
+    this._handleConfirmEvent = this._handleConfirmEvent.bind(this); // Явная привязка к class PopupConfirm, чтобы не потерять контекст
   }
 
   setEventListeners() {
-    const confirmBtn = this._popup.querySelector(".popup__save-button");
+    this._confirmBtn = this._popup.querySelector(".popup__save-button");
 
     super.setEventListeners();
-    confirmBtn.addEventListener("click", () => this._handleConfirm({ cardElement: this._cardElement, cardId: this._cardId }, confirmBtn));
+    this._confirmBtn.addEventListener("click", this._handleConfirmEvent);
   }
 
   open({ cardElement, cardId }) {
@@ -18,5 +19,15 @@ export default class PopupConfirm extends Popup {
 
     this._cardElement = cardElement;
     this._cardId = cardId;
+  }
+
+  close() {
+    super.close();
+
+    this._confirmBtn.removeEventListener("click", this._handleConfirmEvent);
+  }
+
+  _handleConfirmEvent() {
+    this._handleConfirm({ cardElement: this._cardElement, cardId: this._cardId }, this._confirmBtn);
   }
 }
