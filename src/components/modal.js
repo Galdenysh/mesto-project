@@ -1,7 +1,7 @@
 // import { toggleButtonState } from "./validate.js";
-import { selectorsList } from "./constants.js";
+import { selectorsList } from "../utils/constants.js";
 // import { sendProfileInfo, sendNewCard, sendAvatar } from "./api.js";
-import { renderResultAvatar, renderResultProfileInfo, renderResultNewCard, renderLoading } from "./index.js";
+import { renderResultAvatar, renderResultProfileInfo, renderResultNewCard, renderLoading } from "../pages/index.js";
 // import { removeCard } from "./card.js";
 
 // Получение информации профиля
