@@ -1,6 +1,6 @@
 import "../pages/index.css";
 
-import { selectorsList } from "../utils/constants";
+import { selectorsList } from "../utils/constants.js";
 import {
   openPopup,
   openPopupProfile,
@@ -90,6 +90,9 @@ const popupConfirm = new PopupConfirm(
 
 // Создание объекта попапа с картинкой
 const popupWithImage = new PopupWithImage(".popup_type_image");
+
+// Создание объекта валидации формы
+const formNewCardValidation = new FormValidate(selectorsList, formNewCardElement);
 
 // Получения начальных данных с сервера
 Promise.all([api.getProfileInfo(), api.getInitialCards()])
@@ -188,6 +191,8 @@ const renderLoading = (submitBtn, isLoading) => {
   }
 };
 
+formNewCardValidation.enableValidation();
+
 // Слушаем кнопки отправки форм
 popupWithImage.setEventListeners();
 popupConfirm.setEventListeners();
@@ -196,6 +201,9 @@ popupNewCard.setEventListeners();
 // Слушаем кнопки открытия попапов
 openPopupAvatarBtn.addEventListener("click", () => openPopup(popupAvatar));
 openPopupProfileBtn.addEventListener("click", openPopupProfile);
-openPopupNewCardBtn.addEventListener("click", () => popupNewCard.open());
+openPopupNewCardBtn.addEventListener("click", () => {
+  popupNewCard.open();
+  formNewCardValidation.toggleButtonState();
+});
 
 export { renderResultProfileInfo, renderResultAvatar, renderResultNewCard, renderLoading };
