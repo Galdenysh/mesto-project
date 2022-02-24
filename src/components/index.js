@@ -16,7 +16,7 @@ import {
   userAvatar,
   popupAvatar,
   popupNewCard,
-  formAvatarSubmitHandler,
+  //formAvatarSubmitHandler,
   formProfileElement,
   formNewCardElement,
 } from "./modal.js";
@@ -25,7 +25,9 @@ import Api from "./Api.js";
 import Card from "./Card.js";
 import Section from "./Section.js";
 import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
 import { UserInfo } from "./UserInfo";
+
 
 const api = new Api({
   baseURL: "https://nomoreparties.co/v1/plus-cohort-6",
@@ -139,6 +141,34 @@ const renderLoading = (submitBtn, isLoading) => {
   }
 };
 
+//--------------------------------------------------------------------------
+
+const popupWithFormAvatar = new PopupWithForm({
+  selector: popupAvatar,
+  handleFormSubmit: (info) => {
+    renderLoading(avatarSubmitBtn, true);
+    api.sendAvatar(info.avatarInput)
+      .then((profileInfo) => {
+        renderResultAvatar(profileInfo);
+        formAvatarElement.reset(); 
+        toggleButtonState(selectorsList, avatarInputsList, avatarSubmitBtn);
+        closePopup(popupAvatar);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        renderLoading(avatarSubmitBtn, false);
+      });
+  }
+})
+
+openPopupAvatarBtn.addEventListener("click", () => {
+  openPopup(popupAvatar)
+  popupWithFormAvatar.open()
+});
+//--------------------------------------------------------------------------
+
 // enableValidation(selectorsList); // Вызов функции валидации форм
 
 // // Функция навешивания слушателей на все попапы
@@ -156,13 +186,15 @@ const renderLoading = (submitBtn, isLoading) => {
 // });
 
 // Слушаем кнопки
-openPopupAvatarBtn.addEventListener("click", () => openPopup(popupAvatar));
+//openPopupAvatarBtn.addEventListener("click", () => openPopup(popupAvatar));
 openPopupProfileBtn.addEventListener("click", openPopupProfile);
 openPopupNewCardBtn.addEventListener("click", () => openPopup(popupNewCard));
 
 // Слушаем отправку формы
-formAvatarElement.addEventListener("submit", formAvatarSubmitHandler);
+//formAvatarElement.addEventListener("submit", formAvatarSubmitHandler);
 formProfileElement.addEventListener("submit", formProfileSubmitHandler);
 formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
+
+
 
 export { api, renderResultInitialCards, renderResultProfileInfo, renderResultAvatar, renderResultNewCard, renderResultLikeCount, renderLoading };
