@@ -13,6 +13,7 @@ import {
   popupAvatar,
   formAvatarSubmitHandler,
   formProfileElement,
+  avatarSubmitBtn
 } from "../components/modal.js";
 import Api from "../components/Api.js";
 import Card from "../components/Card.js";
@@ -44,6 +45,28 @@ const api = new Api({
   },
 });
 
+// Создание объекта попапа редактирования аватара
+const popupWithFormAvatar = new PopupWithForm(
+  {
+    handleFormSubmit: (info) => {
+      renderLoading(avatarSubmitBtn, true);
+      api
+        .sendAvatar(info.avatar)
+        .then((profileInfo) => {
+          renderResultAvatar(profileInfo);
+          popupWithFormAvatar.close();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          renderLoading(avatarSubmitBtn, false);
+        });
+    },
+  },
+  ".popup_type_avatar"
+);
+
 // Создание объекта попапа создания карточки
 const popupNewCard = new PopupWithForm(
   {
@@ -67,6 +90,17 @@ const popupNewCard = new PopupWithForm(
   },
   ".popup_type_new-card"
 );
+
+openPopupAvatarBtn.addEventListener("click", () => {
+  popupWithFormAvatar.open();
+  formAvatarValidation.toggleButtonState();
+});
+
+popupWithFormAvatar.setEventListeners();
+
+const formAvatarValidation = new FormValidate(selectorsList, formAvatarElement);
+
+formAvatarValidation.enableValidation();
 
 // Создание объекта попапа подтверждения
 const popupConfirm = new PopupConfirm(
@@ -199,7 +233,7 @@ popupConfirm.setEventListeners();
 popupNewCard.setEventListeners();
 
 // Слушаем кнопки открытия попапов
-openPopupAvatarBtn.addEventListener("click", () => openPopup(popupAvatar));
+//openPopupAvatarBtn.addEventListener("click", () => openPopup(popupAvatar));
 openPopupProfileBtn.addEventListener("click", openPopupProfile);
 openPopupNewCardBtn.addEventListener("click", () => {
   popupNewCard.open();

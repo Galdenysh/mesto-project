@@ -24,12 +24,12 @@ export default class Api {
   }
 
   // Функция редактирования аватара
-  sendAvatar(avatarInput) {
+  sendAvatar(link) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: avatarInput.value,
+        avatar: link,
       }),
     }).then((res) => this._getResponseData(res));
   }

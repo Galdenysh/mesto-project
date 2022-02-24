@@ -95,7 +95,7 @@ function closePopupEsc(evt) {
 }
 
 // Обработчик «отправки» формы обновления аватара
-const formAvatarSubmitHandler = () => {
+/*const formAvatarSubmitHandler = () => {
   renderLoading(avatarSubmitBtn, true);
 
   // Посылаем запрос на сервер на обновление аватара
@@ -130,7 +130,7 @@ const formProfileSubmitHandler = () => {
     .finally(() => {
       renderLoading(profileSubmitBtn, false);
     });
-};
+};*/
 
 // Обработчик «отправки» формы добавления места
 const formNewCardSubmitHandler = () => {
@@ -165,8 +165,8 @@ export {
   openPopupImage,
   openPopupConfirm,
   closePopup,
-  formAvatarSubmitHandler,
-  formProfileSubmitHandler,
+  //formAvatarSubmitHandler,
+  //formProfileSubmitHandler,
   formNewCardSubmitHandler,
   profile,
   userName,
@@ -175,8 +175,10 @@ export {
   popupAvatar,
   popupNewCard,
   popupConfirm,
+  popupProfile,
   confirmBtn,
   formAvatarElement,
   formProfileElement,
   formNewCardElement,
+  avatarSubmitBtn
 };

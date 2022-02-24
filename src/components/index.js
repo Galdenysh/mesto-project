@@ -16,6 +16,7 @@ import {
   userAvatar,
   popupAvatar,
   popupNewCard,
+  popupProfile,
   //formAvatarSubmitHandler,
   formProfileElement,
   formNewCardElement,
@@ -143,16 +144,14 @@ const renderLoading = (submitBtn, isLoading) => {
 
 //--------------------------------------------------------------------------
 
-const popupWithFormAvatar = new PopupWithForm({
+/*const popupWithFormAvatar = new PopupWithForm({
   selector: popupAvatar,
   handleFormSubmit: (info) => {
     renderLoading(avatarSubmitBtn, true);
     api.sendAvatar(info.avatarInput)
       .then((profileInfo) => {
         renderResultAvatar(profileInfo);
-        formAvatarElement.reset(); 
         toggleButtonState(selectorsList, avatarInputsList, avatarSubmitBtn);
-        closePopup(popupAvatar);
       })
       .catch((err) => {
         console.log(err);
@@ -164,9 +163,29 @@ const popupWithFormAvatar = new PopupWithForm({
 })
 
 openPopupAvatarBtn.addEventListener("click", () => {
-  openPopup(popupAvatar)
   popupWithFormAvatar.open()
 });
+
+const popupWithFormProfile = new PopupWithForm({
+  selector: popupProfile,
+  handleFormSubmit: (info) => {
+    renderLoading(profileSubmitBtn, true);
+    api.sendProfileInfo(info.nameInput, info.signatureInput)
+      .then((profileInfo) => {
+        renderResultProfileInfo(profileInfo);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        renderLoading(profileSubmitBtn, false);
+      });
+  }
+})
+
+openPopupProfileBtn.addEventListener("click", () => {
+  popupWithFormProfile.open()
+});*/
 //--------------------------------------------------------------------------
 
 // enableValidation(selectorsList); // Вызов функции валидации форм
@@ -187,12 +206,12 @@ openPopupAvatarBtn.addEventListener("click", () => {
 
 // Слушаем кнопки
 //openPopupAvatarBtn.addEventListener("click", () => openPopup(popupAvatar));
-openPopupProfileBtn.addEventListener("click", openPopupProfile);
+//openPopupProfileBtn.addEventListener("click", openPopupProfile);
 openPopupNewCardBtn.addEventListener("click", () => openPopup(popupNewCard));
 
 // Слушаем отправку формы
 //formAvatarElement.addEventListener("submit", formAvatarSubmitHandler);
-formProfileElement.addEventListener("submit", formProfileSubmitHandler);
+//formProfileElement.addEventListener("submit", formProfileSubmitHandler);
 formNewCardElement.addEventListener("submit", formNewCardSubmitHandler);
 
 
