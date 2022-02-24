@@ -21,12 +21,6 @@ export default class PopupConfirm extends Popup {
     this._cardId = cardId;
   }
 
-  close() {
-    super.close();
-
-    this._confirmBtn.removeEventListener("click", this._handleConfirmEvent);
-  }
-
   _handleConfirmEvent() {
     this._handleConfirm({ cardElement: this._cardElement, cardId: this._cardId }, this._confirmBtn);
   }
