@@ -13,7 +13,8 @@ import {
   popupAvatar,
   formAvatarSubmitHandler,
   formProfileElement,
-  avatarSubmitBtn
+  avatarSubmitBtn,
+  profileSubmitBtn
 } from "../components/modal.js";
 import Api from "../components/Api.js";
 import Card from "../components/Card.js";
@@ -67,6 +68,51 @@ const popupWithFormAvatar = new PopupWithForm(
   ".popup_type_avatar"
 );
 
+openPopupAvatarBtn.addEventListener("click", () => {
+  popupWithFormAvatar.open();
+  formAvatarValidation.toggleButtonState();
+});
+
+popupWithFormAvatar.setEventListeners();
+
+const formAvatarValidation = new FormValidate(selectorsList, formAvatarElement);
+
+formAvatarValidation.enableValidation();
+
+// Создание объекта попапа редактирования профиля
+const popupWithFormProfile = new PopupWithForm(
+  {
+    handleFormSubmit: (info) => {
+      renderLoading(profileSubmitBtn, true);
+      api
+        .sendProfileInfo(info.name, info.about)
+        .then((profileInfo) => {
+          renderResultProfileInfo(profileInfo);
+          popupWithFormProfile.close();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          renderLoading(profileSubmitBtn, false);
+        });
+    },
+  },
+  ".popup_type_profile"
+);
+
+openPopupProfileBtn.addEventListener("click", () => {
+  popupWithFormProfile.open();
+  formProfileValidation.toggleButtonState();
+});
+
+popupWithFormProfile.setEventListeners();
+
+const formProfileValidation = new FormValidate(selectorsList, formProfileElement);
+
+formProfileValidation.enableValidation();
+
+
 // Создание объекта попапа создания карточки
 const popupNewCard = new PopupWithForm(
   {
@@ -91,16 +137,6 @@ const popupNewCard = new PopupWithForm(
   ".popup_type_new-card"
 );
 
-openPopupAvatarBtn.addEventListener("click", () => {
-  popupWithFormAvatar.open();
-  formAvatarValidation.toggleButtonState();
-});
-
-popupWithFormAvatar.setEventListeners();
-
-const formAvatarValidation = new FormValidate(selectorsList, formAvatarElement);
-
-formAvatarValidation.enableValidation();
 
 // Создание объекта попапа подтверждения
 const popupConfirm = new PopupConfirm(

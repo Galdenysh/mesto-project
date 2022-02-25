@@ -180,5 +180,6 @@ export {
   formAvatarElement,
   formProfileElement,
   formNewCardElement,
-  avatarSubmitBtn
+  avatarSubmitBtn,
+  profileSubmitBtn
 };

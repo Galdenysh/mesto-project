@@ -35,13 +35,13 @@ export default class Api {
   }
 
   // Функция отправка информации о профиле
-  sendProfileInfo(nameInput, signatureInput) {
+  sendProfileInfo(name, job) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: nameInput.value,
-        about: signatureInput.value,
+        name: name,
+        about: job,
       }),
     }).then((res) => this._getResponseData(res));
   }
