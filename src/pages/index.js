@@ -85,7 +85,7 @@ const popupWithFormProfile = new PopupWithForm(
     handleFormSubmit: (info) => {
       renderLoading(profileSubmitBtn, true);
       api
-        .sendProfileInfo(info.name, info.about)
+        .sendProfileInfo(info.name, info.signature)
         .then((profileInfo) => {
           renderResultProfileInfo(profileInfo);
           popupWithFormProfile.close();
