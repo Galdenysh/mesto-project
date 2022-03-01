@@ -1,21 +1,21 @@
 import "../pages/index.css";
 
-import { selectorsList } from "../utils/constants.js";
 import {
-  openPopup,
-  openPopupProfile,
-  closePopup,
+  selectorsList,
+  cardListSection,
+  openPopupAvatarBtn,
+  openPopupProfileBtn,
+  openPopupNewCardBtn,
   formAvatarElement,
-  formProfileSubmitHandler,
+  avatarSubmitBtn,
+  formProfileElement,
+  profileSubmitBtn,
+  formNewCardElement,
+  newCardSubmitBtn,
   userName,
   userSignature,
   userAvatar,
-  popupAvatar,
-  formAvatarSubmitHandler,
-  formProfileElement,
-  avatarSubmitBtn,
-  profileSubmitBtn
-} from "../components/modal.js";
+} from "../utils/constants.js";
 import Api from "../components/Api.js";
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
@@ -25,17 +25,8 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo";
 import FormValidate from "../components/FormValidate.js";
 
-const cardListSection = ".cards"; // Селектор секции с карточками
 let currentUserId = {};
 let cardList = {};
-
-// Находим кнопки
-const profile = document.querySelector(".profile");
-const openPopupAvatarBtn = profile.querySelector(".profile__avatar-button");
-const openPopupProfileBtn = profile.querySelector(".profile__edit-button");
-const openPopupNewCardBtn = profile.querySelector(".profile__add-button");
-const formNewCardElement = document.querySelector(".popup_type_new-card").querySelector(".popup__form");
-const newCardSubmitBtn = formNewCardElement.querySelector(`${selectorsList.submitButtonSelector}`);
 
 // Создание объекта запросов к серверу
 const api = new Api({
@@ -46,38 +37,18 @@ const api = new Api({
   },
 });
 
-const userInfoObj = new UserInfo(userName, userSignature, userAvatar)
+// Создание объекта получения информации профиля
+const userInfoObj = new UserInfo(userName, userSignature, userAvatar);
 
 // Создание объекта попапа редактирования аватара
-/*const popupWithFormAvatar = new PopupWithForm(
-  {
-    handleFormSubmit: (info) => {
-      renderLoading(avatarSubmitBtn, true);
-      api
-        .sendAvatar(info.avatar)
-        .then((profileInfo) => {
-          renderResultAvatar(profileInfo);
-          popupWithFormAvatar.close();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          renderLoading(avatarSubmitBtn, false);
-        });
-    },
-  },
-  ".popup_type_avatar"
-);*/
-//------------------------------------------------------------------
 const popupWithFormAvatar = new PopupWithForm(
   {
     handleFormSubmit: (info) => {
       renderLoading(avatarSubmitBtn, true);
       api
         .sendAvatar(info.avatar)
-        .then((data) => {
-          userInfoObj.sendAvatar(data)
+        .then((profileInfo) => {
+          userInfoObj.setUserInfo(profileInfo);
           popupWithFormAvatar.close();
         })
         .catch((err) => {
@@ -90,24 +61,6 @@ const popupWithFormAvatar = new PopupWithForm(
   },
   ".popup_type_avatar"
 );
-//-------------------------------------------------------------------
-
-openPopupAvatarBtn.addEventListener("click", () => {
-  popupWithFormAvatar.open();
-  formAvatarValidation.toggleButtonState();
-});
-
-popupWithFormAvatar.setEventListeners();
-
-const formAvatarValidation = new FormValidate(selectorsList, formAvatarElement);
-
-formAvatarValidation.enableValidation();
-
-// Функция получения аватара
-/*const renderResultAvatar = (profileInfo) => {
-  userAvatar.src = profileInfo.avatar;
-};*/
-
 
 // Создание объекта попапа редактирования профиля
 const popupWithFormProfile = new PopupWithForm(
@@ -117,7 +70,7 @@ const popupWithFormProfile = new PopupWithForm(
       api
         .sendProfileInfo(info.name, info.signature)
         .then((profileInfo) => {
-          renderResultProfileInfo(profileInfo);
+          userInfoObj.setUserInfo(profileInfo);
           popupWithFormProfile.close();
         })
         .catch((err) => {
@@ -130,29 +83,6 @@ const popupWithFormProfile = new PopupWithForm(
   },
   ".popup_type_profile"
 );
-
-openPopupProfileBtn.addEventListener("click", () => {
-  popupWithFormProfile.open();
-  formProfileValidation.toggleButtonState();
-});
-
-popupWithFormProfile.setEventListeners();
-
-const formProfileValidation = new FormValidate(selectorsList, formProfileElement);
-
-formProfileValidation.enableValidation();
-
-// Функция получения информации о профиле с сервера
-const renderResultProfileInfo = (profileInfo) => {
-  userName.textContent = profileInfo.name;
-  userSignature.textContent = profileInfo.about;
-  userAvatar.src = profileInfo.avatar;
-
-  return profileInfo._id;
-};
-
-
-
 
 // Создание объекта попапа создания карточки
 const popupNewCard = new PopupWithForm(
@@ -178,7 +108,6 @@ const popupNewCard = new PopupWithForm(
   ".popup_type_new-card"
 );
 
-
 // Создание объекта попапа подтверждения
 const popupConfirm = new PopupConfirm(
   {
@@ -202,21 +131,21 @@ const popupConfirm = new PopupConfirm(
 // Создание объекта попапа с картинкой
 const popupWithImage = new PopupWithImage(".popup_type_image");
 
-// Создание объекта валидации формы
+// Создание объектов валидации формы
+const formAvatarValidation = new FormValidate(selectorsList, formAvatarElement);
+const formProfileValidation = new FormValidate(selectorsList, formProfileElement);
 const formNewCardValidation = new FormValidate(selectorsList, formNewCardElement);
 
 // Получения начальных данных с сервера
 Promise.all([api.getProfileInfo(), api.getInitialCards()])
   .then(([profileInfo, initialCards]) => {
-    currentUserId = renderResultProfileInfo(profileInfo);
+    currentUserId = profileInfo._id;
+    userInfoObj.setUserInfo(profileInfo);
     renderResultInitialCards(initialCards, currentUserId);
   })
   .catch((err) => {
     console.log(err);
   });
-
-
-
 
 // Функция получения начальных карточек
 const renderResultInitialCards = (initialCards, currentUserId) => {
@@ -282,8 +211,6 @@ const handleRemoveCard = ({ cardElement, cardId }) => {
   popupConfirm.open({ cardElement, cardId });
 };
 
-
-
 // Функция уведомления пользователя о процессе загрузки
 const renderLoading = (submitBtn, isLoading) => {
   if (isLoading) {
@@ -293,19 +220,28 @@ const renderLoading = (submitBtn, isLoading) => {
   }
 };
 
+// Включение валидации форм
+formAvatarValidation.enableValidation();
+formProfileValidation.enableValidation();
 formNewCardValidation.enableValidation();
 
 // Слушаем кнопки отправки форм
+popupWithFormAvatar.setEventListeners();
+popupWithFormProfile.setEventListeners();
 popupWithImage.setEventListeners();
 popupConfirm.setEventListeners();
 popupNewCard.setEventListeners();
 
 // Слушаем кнопки открытия попапов
-//openPopupAvatarBtn.addEventListener("click", () => openPopup(popupAvatar));
-openPopupProfileBtn.addEventListener("click", openPopupProfile);
+openPopupAvatarBtn.addEventListener("click", () => {
+  popupWithFormAvatar.open();
+  formAvatarValidation.toggleButtonState();
+});
+openPopupProfileBtn.addEventListener("click", () => {
+  popupWithFormProfile.open(userInfoObj.getUserInfo());
+  formProfileValidation.toggleButtonState();
+});
 openPopupNewCardBtn.addEventListener("click", () => {
   popupNewCard.open();
   formNewCardValidation.toggleButtonState();
 });
-
-export { renderResultProfileInfo,  renderResultNewCard, renderLoading };//renderResultAvatar,
