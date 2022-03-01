@@ -46,8 +46,10 @@ const api = new Api({
   },
 });
 
+const userInfoObj = new UserInfo(userName, userSignature, userAvatar)
+
 // Создание объекта попапа редактирования аватара
-const popupWithFormAvatar = new PopupWithForm(
+/*const popupWithFormAvatar = new PopupWithForm(
   {
     handleFormSubmit: (info) => {
       renderLoading(avatarSubmitBtn, true);
@@ -66,7 +68,29 @@ const popupWithFormAvatar = new PopupWithForm(
     },
   },
   ".popup_type_avatar"
+);*/
+//------------------------------------------------------------------
+const popupWithFormAvatar = new PopupWithForm(
+  {
+    handleFormSubmit: (info) => {
+      renderLoading(avatarSubmitBtn, true);
+      api
+        .sendAvatar(info.avatar)
+        .then((data) => {
+          userInfoObj.sendAvatar(data)
+          popupWithFormAvatar.close();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          renderLoading(avatarSubmitBtn, false);
+        });
+    },
+  },
+  ".popup_type_avatar"
 );
+//-------------------------------------------------------------------
 
 openPopupAvatarBtn.addEventListener("click", () => {
   popupWithFormAvatar.open();
@@ -78,6 +102,12 @@ popupWithFormAvatar.setEventListeners();
 const formAvatarValidation = new FormValidate(selectorsList, formAvatarElement);
 
 formAvatarValidation.enableValidation();
+
+// Функция получения аватара
+/*const renderResultAvatar = (profileInfo) => {
+  userAvatar.src = profileInfo.avatar;
+};*/
+
 
 // Создание объекта попапа редактирования профиля
 const popupWithFormProfile = new PopupWithForm(
@@ -111,6 +141,17 @@ popupWithFormProfile.setEventListeners();
 const formProfileValidation = new FormValidate(selectorsList, formProfileElement);
 
 formProfileValidation.enableValidation();
+
+// Функция получения информации о профиле с сервера
+const renderResultProfileInfo = (profileInfo) => {
+  userName.textContent = profileInfo.name;
+  userSignature.textContent = profileInfo.about;
+  userAvatar.src = profileInfo.avatar;
+
+  return profileInfo._id;
+};
+
+
 
 
 // Создание объекта попапа создания карточки
@@ -174,14 +215,8 @@ Promise.all([api.getProfileInfo(), api.getInitialCards()])
     console.log(err);
   });
 
-// Функция получения информации о профиле с сервера
-const renderResultProfileInfo = (profileInfo) => {
-  userName.textContent = profileInfo.name;
-  userSignature.textContent = profileInfo.about;
-  userAvatar.src = profileInfo.avatar;
 
-  return profileInfo._id;
-};
+
 
 // Функция получения начальных карточек
 const renderResultInitialCards = (initialCards, currentUserId) => {
@@ -247,10 +282,7 @@ const handleRemoveCard = ({ cardElement, cardId }) => {
   popupConfirm.open({ cardElement, cardId });
 };
 
-// Функция получения аватара
-const renderResultAvatar = (profileInfo) => {
-  userAvatar.src = profileInfo.avatar;
-};
+
 
 // Функция уведомления пользователя о процессе загрузки
 const renderLoading = (submitBtn, isLoading) => {
@@ -276,4 +308,4 @@ openPopupNewCardBtn.addEventListener("click", () => {
   formNewCardValidation.toggleButtonState();
 });
 
-export { renderResultProfileInfo, renderResultAvatar, renderResultNewCard, renderLoading };
+export { renderResultProfileInfo,  renderResultNewCard, renderLoading };//renderResultAvatar,
