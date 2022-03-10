@@ -18,6 +18,7 @@
 - Валидация форм с помощью JavaScript.
 - Сборка с помощью Webpack.
 - Подключение проекта к серверу.
+- Объектно ориентированное программирование.
 
 **Figma**
 
@@ -30,3 +31,5 @@
 - [Ссылка на макет 3 в Figma](https://www.figma.com/file/kRVLKwYG3d1HGLvh7JFWRT/JavaScript.-Sprint-6?node-id=1140%3A291)
 
 - [Ссылка на макет 4 в Figma](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript.-Sprint-9?node-id=109%3A315)
+
+- [Ссылка на гит второго человека из пары](https://github.com/andreymedvedev29) Почта: medvedevandrei29@yandex.ru
